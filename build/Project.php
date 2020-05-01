@@ -118,6 +118,8 @@ class Project
                     \copy($pathToOrigin, $pathToDestiny);
                 }
 
+
+
                 echo "::: Instalação dos documentos iniciais executada com sucesso.\n";
                 echo ":::\n";
                 echo "::: Para finalizar, efetue as edições específicas dos seguintes documentos:\n";
@@ -125,6 +127,7 @@ class Project
                 echo ":::   1. Altere os dados principais do seu projeto.\n";
                 echo ":::   2. Adicione na sessão \"autoload\" a diretiva \"classmap\" apontando para o diretorio\n";
                 echo ":::      raiz da aplicação instalada.\n";
+                echo ":::   3. Rote o comando \"composer update\".\n";
                 echo ":::\n";
                 echo "::: - Configure o arquivo \"domain-config.php\".\n";
                 echo "::: - Configure o arquivo \"database-config.php\".\n";
