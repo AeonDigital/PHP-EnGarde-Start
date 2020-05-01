@@ -1,0 +1,128 @@
+<h1><?php echo $viewData->viewTitle; ?></h1>
+<p>
+    Locale: <?php echo $this->routeConfig->getResponseLocale(); ?><br />
+    Mime: <?php echo $this->routeConfig->getResponseMime(); ?><br />
+    MimeType: <?php echo $this->routeConfig->getResponseMimeType(); ?><br />
+</p>
+
+
+<hr />
+
+<p>
+    A configuração mais básica de um domínio que será controlado prlo framework EnGarde! se dá atravéz
+    da manipulação das constantes existentes no arquivo <i>/domain-config.php</i>.
+</p>
+<p>
+    Abaixo segue uma amostra do conteúdo que é encontrado dentro deste arquivo;
+</p>
+
+<pre>
+/**
+ * Informa o tipo de ambiente onde a aplicação está rodando no momento.
+ *
+ * Valores comuns:
+ *  - ``PRD``   : Production
+ *  - ``HML``   : Homolog
+ *  - ``QA``    : Quality Assurance
+ *  - ``DEV``   : Development
+ *  - ``LCL``   : Local
+ *  - ``UTEST`` : Unit Test
+ *
+ * @var     ENVIRONMENT
+ */
+const ENVIRONMENT = "LCL";
+/**
+ * Indica se a aplicação está em debug mode.
+ *
+ * Sua principal função é configurar saidas de erros ou retorno de dados
+ * para auxilio dos desenvolvedores.
+ *
+ * @var     bool
+ */
+const DEBUG_MODE = true;
+/**
+ * Quando "true" irá refazer o arquivo de indexação das rotas
+ * a cada requisição realizada.
+ *
+ * @var     bool
+ */
+const UPDATE_ROUTES = true;
+
+
+
+
+
+/**
+ * Array contendo o nome de cada aplicação que está hospedada no
+ * domínio.
+ *
+ * @var     HOSTED_APPS
+ */
+const HOSTED_APPS = ["site"];
+/**
+ * Nome da aplicação padrão para o domínio atual.
+ *
+ * @var     DEFAULT_APP
+ */
+const DEFAULT_APP = "site";
+
+
+
+
+
+/**
+ * Define o timezone do domínio.
+ * [Lista de fusos horários suportados](http://php.net/manual/en/timezones.php)
+ *
+ * @var     string
+ */
+const DATETIME_LOCAL = "America/Sao_Paulo";
+/**
+ * Define o tempo máximo (em segundos) para a execução das requisições.
+ *
+ * @var     integer
+ */
+const REQUEST_TIMEOUT = 1200;
+/**
+ * Define o valor máximo (em Mb) para o upload de um arquivo.
+ *
+ * @var     integer
+ */
+const REQUEST_MAX_FILESIZE = 100;
+/**
+ * Define o valor máximo (em Mb) para a postagem de dados.
+ *
+ * @var     integer
+ */
+const REQUEST_MAX_POSTSIZE = 100;
+
+
+
+
+
+/**
+ * Página de erros que deve ser mostrada para o UA caso
+ * nenhuma outra tenha sido definida pela aplicação que
+ * deve ser executada.
+ *
+ * O caminho deve ser definido a partir do diretório
+ * raiz do domínio.
+ *
+ * @var     string
+ */
+const DEFAULT_ERROR_VIEW = "/domain-error.phtml";
+
+
+
+
+/**
+ * Nome das classes que iniciam as aplicações do domínio.
+ *
+ * @var     string
+ */
+const APPLICATION_CLASSNAME = "AppStart";
+</pre>
+
+
+<hr />
+<a href="/documentation/application">Configurando uma Aplicação</a>

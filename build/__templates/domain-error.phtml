@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <?php
+        $useCode        = $viewData->http->code;
+        $useMessage     = $viewData->http->message;
+        if ($viewData->isDebugMode === true && $viewData->environmentType !== "PRD") {
+            $useMessage = $viewData->debugLog->message;
+        }
+    ?>
+    <head>
+        <meta charset="utf-8" />
+        <title><?php echo $useCode; ?> - <?php echo $useMessage; ?></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <style>
+            body {
+                background-color:#E9E9E9;
+                font-size:16px; font-family:"Georgia"; color:#1C386C;
+                text-align:center;
+            }
+            body h1 {font-size:8em; margin:0; padding:0; }
+            body h2 {font-size:3em; margin:0 0 1em 0; padding:0; }
+            body h3 {font-size:1em; line-height:1em; margin:0; padding:0; }
+            body pre {text-align:left; font-size:11px; margin:2em 5%; padding:15px; background-color:#E1E1E1;}
+        </style>
+    </head>
+    <body>
+        <h1><?php echo $useCode; ?></h1>
+        <h2><?php echo $useMessage; ?></h2>
+        <?php
+        if ($viewData->isDebugMode === true && $viewData->environmentType !== "PRD") {
+            echo "<h3>rootPath: " . $viewData->rootPath . "</h3>";
+            \html_print($viewData->debugLog);
+        }
+        ?>
+    </body>
+</html>

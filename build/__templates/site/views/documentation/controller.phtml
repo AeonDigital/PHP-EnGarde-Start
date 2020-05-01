@@ -1,0 +1,81 @@
+<h1><?php echo $viewData->viewTitle; ?></h1>
+<p>
+    Locale: <?php echo $this->routeConfig->getResponseLocale(); ?><br />
+    Mime: <?php echo $this->routeConfig->getResponseMime(); ?><br />
+    MimeType: <?php echo $this->routeConfig->getResponseMimeType(); ?><br />
+</p>
+
+
+<hr />
+
+<p>
+    O <b>EnGarde!</b> segue o padrão <b>MVC</b> para o desenvolvimento de seus componentes
+    portanto, é nos <b>controllers</b> que você irá desenvolver a programação de sua aplicação.
+    <br />
+    Cada <b>controller</b> é uma classe que deve ser definida dentro do diretório <b>/appname/controllers</b>
+    e que deve extender a classe abstrata <b>AeonDigital\EnGarde\MainController</b>.
+</p>
+<p>
+    Esta classe possui uma constante que, na classe herdada pode ser alterado. Trata-se do <b>defaultRouteConfig</b>.
+    <br /><br />
+    Tal constante traz as configurações que TODA rota dentro do mesmo controller irão compartilhar a não ser que
+    a definição da própria rota, de forma explicita, indique o contrário.
+    <br /><br />
+    Estes valores irão sobrescrever aqueles que forem definidos na classe da aplicação ao utilizar a propriedade <b>defaultApplicationConfig["defaultRouteConfig"]</b> da classe <b>AppStart</b>.
+</p>
+<p>
+    Abaixo segue uma amostra de um simples controller possuindo uma única rota e contendo algumas
+    configurações gerais para as rotas filhas.
+</p>
+
+<pre>
+&lt;?php
+declare (strict_types=1);
+
+namespace site\controllers;
+
+use AeonDigital\EnGarde\MainController as MainController;
+
+
+
+/**
+ * Controller
+ */
+class Home extends MainController
+{
+
+    const defaultRouteConfig = [
+        "description"       => "Home.",
+        "allowedMimeTypes"  => ["html", "xhtml", "json"],
+        "allowedMethods"    => ["GET"],
+        "isUseXHTML"        => true
+    ];
+
+
+
+
+
+    public static $registerRoute_GET_index = [
+        "description"       => "Página inicial.",
+        "allowedMethods"    => ["GET"],
+        "routes"            => ["/", "/home"],
+        "action"            => "index",
+        "masterPage"        => "/masterPage.phtml",
+        "view"              => "/home/index.phtml",
+        "styleSheets"       => [
+            "/css/main.css"
+        ],
+        "javaScripts"       => [
+            "/js/main.js"
+        ],
+        "responseDownloadFileName" => "nomeCustomizado.html"
+    ];
+    public function index() {
+        // Regras de negócio aqui!
+    }
+}
+</pre>
+
+
+<hr />
+<a href="/documentation/route">Rotas</a>

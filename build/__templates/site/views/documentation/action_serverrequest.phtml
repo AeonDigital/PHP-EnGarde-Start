@@ -1,0 +1,74 @@
+<h1><?php echo $viewData->viewTitle; ?></h1>
+<p>
+    Locale: <?php echo $this->routeConfig->getResponseLocale(); ?><br />
+    Mime: <?php echo $this->routeConfig->getResponseMime(); ?><br />
+    MimeType: <?php echo $this->routeConfig->getResponseMimeType(); ?><br />
+</p>
+
+
+<hr />
+
+<h2>$this->serverConfig->getServerRequest()</h2>
+<p>
+    Este objeto trará todas as informações obtidas da própria requisição HTTP efetuada.
+</p>
+
+
+
+<pre>
+Interface   : AeonDigital\Interfaces\Http\Message\iServerRequest
+Classe      : AeonDigital\Http\Message\ServerRequest
+
+&#187; $this->serverConfig->getServerRequest()
+    │
+    │   Retorna os cookies enviados pelo ``UA``.
+    │   Será retornado um array associativo contendo chave/valor de cada cookie recebido.
+    ├─  getCookieParams() : array
+    │
+    │
+    │   Retorna os querystrings enviados pelo ``UA``.
+    │   Será retornado um array associativo contendo chave/valor de cada querystring recebido.
+    ├─  getQueryParams() : array
+    │
+    │
+    │   Retorna o valor da querystring de nome indicado.
+    │   Retornará ``null`` caso ela não exista.
+    ├─  getQueryString(string $name) : ?string
+    │
+    │
+    │   Retorna os arquivos enviados pelo ``UA``.
+    ├─  getUploadedFiles() : ?array
+    │
+    │
+    │   Retorna um array contendo todos os campos recebidos no corpo da requisição.
+    │   Trata-se de um alias para o método ``getParsedBody``.
+    ├─  getPostedFields() : ?array
+    │
+    │
+    │   Retorna o valor do campo de nome indicado.
+    │   Retornará ``null`` caso ele não exista.
+    ├─  getPost(string $name) : ?string
+    │
+    │
+    │   Retorna o valor do cookie de nome indicado.
+    │   Retornará ``null`` caso ele não exista.
+    ├─  getCookie(string $name) : ?string
+    │
+    │
+    │   Retorna o valor do parametro da requisição de nome indicado.
+    │   A chave é procurada entre Cookies, Attributes, QueryStrings e Post Data respectivamente e
+    │   será retornada a primeira entre as coleções avaliadas.
+    │
+    │
+    │   Retornará ``null`` caso o nome da chave não seja encontrado.
+    └─  getParam(string $name) : ?string
+
+
+
+
+</pre>
+
+
+
+<hr />
+<a href="/documentation/action_applicationconfig">Objeto ApplicationConfig</a>

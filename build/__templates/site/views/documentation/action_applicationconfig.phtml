@@ -1,0 +1,97 @@
+<h1><?php echo $viewData->viewTitle; ?></h1>
+<p>
+    Locale: <?php echo $this->routeConfig->getResponseLocale(); ?><br />
+    Mime: <?php echo $this->routeConfig->getResponseMime(); ?><br />
+    MimeType: <?php echo $this->routeConfig->getResponseMimeType(); ?><br />
+</p>
+
+
+<hr />
+
+<h2>$this->serverConfig->getApplicationConfig()</h2>
+<p>
+    Este objeto trará todas as configurações da aplicação corrente.
+</p>
+
+
+
+<pre>
+Interface   : AeonDigital\EnGarde\Interfaces\Config\iApplication
+Classe      : AeonDigital\EnGarde\Config\Application
+
+&#187; $this->serverConfig->getServerRequest()
+    │
+    │   Retorna o nome da aplicação.
+    ├─  getAppName() : string
+    │
+    │
+    │   Caminho completo até o diretório raiz da aplicação.
+    ├─  getAppRootPath() : string
+    │
+    │
+    │   Retorna o caminho relativo (a partir de ``appRootPath``) até o arquivo de rotas da aplicação.
+    ├─  getPathToAppRoutes(bool $fullPath = false) : string
+    │
+    │
+    │   Retorna o caminho relativo (a partir de ``appRootPath``) até o diretório de controllers
+    │   da aplicação.
+    ├─  getPathToControllers(bool $fullPath = false) : string
+    │
+    │
+    │   Retorna o caminho relativo (a partir de ``appRootPath``) até o diretório das views
+    │   da aplicação.
+    ├─  getPathToViews(bool $fullPath = false) : string
+    │
+    │
+    │   Retorna o caminho relativo (a partir de ``appRootPath``) até o diretório que estarão
+    │   armazenados os recursos para as views (imagens, JS, CSS ...).
+    ├─  getPathToViewsResources(bool $fullPath = false) : string
+    │
+    │
+    │   Retorna o caminho relativo (a partir de ``appRootPath``) até o diretório que estarão
+    │   armazenados os documentos de configuração das legendas.
+    ├─  getPathToLocales(bool $fullPath = false) : string
+    │
+    │
+    │   Retorna o caminho relativo (a partir de ``appRootPath``) até o diretório de armazenamento
+    │   para os arquivos de cache.
+    ├─  getPathToCacheFiles(bool $fullPath = false) : string
+    │
+    │
+    │   Retorna a rota inicial da aplicação.
+    ├─  getStartRoute() : string
+    │
+    │
+    │   Namespace para os controllers da aplicação.
+    ├─  getControllersNamespace() : string
+    │
+    │
+    │   Retorna a coleção de locales suportada pela aplicação.
+    ├─  getLocales() : array
+    │
+    │
+    │   Retorna o locale padrão para a aplicação corrente.
+    ├─  getDefaultLocale() : string
+    │
+    │
+    │   Retorna ``true`` se a aplicação deve usar o sistema de legendas.
+    ├─  getIsUseLabels() : bool
+    │
+    │
+    │   Retorna um array associativo contendo os valores padrões para as rotas de toda a
+    │   aplicação.
+    ├─  getDefaultRouteConfig() : array
+    │
+    │
+    │   Resgata o caminho relativo até a view que deve ser enviada ao ``UA`` em caso de erros
+    │   na aplicação.
+    └─  getPathToErrorView(bool $fullPath = false) : string
+
+
+
+
+</pre>
+
+
+<hr />
+<a href="/documentation/action_routeconfig">Objeto RouteConfig</a>

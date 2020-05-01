@@ -1,0 +1,136 @@
+<h1><?php echo $viewData->viewTitle; ?></h1>
+<p>
+    Locale: <?php echo $this->routeConfig->getResponseLocale(); ?><br />
+    Mime: <?php echo $this->routeConfig->getResponseMime(); ?><br />
+    MimeType: <?php echo $this->routeConfig->getResponseMimeType(); ?><br />
+</p>
+
+
+<hr />
+
+<p>
+    Toda aplicação dentro do <b>EnGarde! Framework</b> possui uma classe que é instanciada assim que
+    o motor do domínio identifica-a como sendo aquela que deve responder por uma URL.
+    <br />
+    O nome desta classe, por padrão é <b>AppStart</b> e está localizada no diretório raiz de aplicação
+    correspondente.
+</p>
+<p>
+    Dentro desta classe você pode configurar algumas propriedades da mesma usando para isto a propriedade
+    <b>defaultApplicationConfig</b>. <br />
+    Abaixo segue um exemplo de uma classe de uma aplicação de demonstração contendo todas as configurações
+    disponíveis e uma breve descrição sobre cada item.
+</p>
+<p>
+    Nenhuma destas propriedades pode ser alterada durante a execução da aplicação.
+</p>
+
+<pre>
+&lt;?php
+declare (strict_types=1);
+
+namespace site;
+
+use AeonDigital\EnGarde\MainApplication as MainApplication;
+
+
+
+/**
+ * Classe base da aplicação.
+ */
+class AppStart extends MainApplication
+{
+
+
+    protected array $defaultApplicationConfig = [
+        // Nome da aplicação.
+        // Preenchido automaticamente pelo Framework.
+        // @string
+        "appName"               => "appname",
+
+        // Caminho completo até o diretório raiz da aplicação.
+        // Preenchido automaticamente pelo Framework.
+        // @string
+        "appRootPath"           => "/appname",
+
+        // Caminho relativo (a partir de "appRootPath") até o arquivo
+        // de rotas da aplicação (AppRoutes.php).
+        // Preenchido automaticamente pelo Framework.
+        // @string
+        "pathToAppRoutes"       => "/appname/AppRoutes.php",
+
+        // Caminho relativo (a partir de "appRootPath") até o diretório
+        // de controllers da aplicação.
+        // Preenchido automaticamente pelo Framework.
+        // @string
+        "pathToControllers"     => "/appname/controllers",
+
+        // Caminho relativo (a partir de "appRootPath") até o diretório
+        // de views da aplicação.
+        // Preenchido automaticamente pelo Framework.
+        // @string
+        "pathToViews"           => "/appname/views",
+
+        // Caminho relativo (a partir de "appRootPath") até o diretório
+        // de recursos para as views.
+        // Preenchido automaticamente pelo Framework.
+        // @string
+        "pathToViewsResources"  => "/appname/resources",
+
+        // Caminho relativo (a partir de "appRootPath") até o diretório
+        // que estarão armazenados os documentos de configuração das legendas.
+        // Preenchido automaticamente pelo Framework.
+        // @string
+        "pathToLocales"         => "/appname/locales",
+
+        // Caminho relativo (a partir de "appRootPath") até o
+        // diretório de armazenamento para os arquivos de cache.
+        // Preenchido automaticamente pelo Framework.
+        // @string
+        "pathToCacheFiles"      => "/appname/cache",
+
+        // Rota inicial da aplicação.
+        // Preenchido automaticamente pelo Framework.
+        // @string
+        "startRoute"            => "/",
+
+        // Namespace para os controllers da aplicação.
+        // Preenchido automaticamente pelo Framework.
+        // @string
+        "controllersNamespace"  => "\appname\controllers",
+
+        // Coleção de locales suportada pela aplicação.
+        // @string[]
+        "locales"               => [],
+
+        // Locale padrão para a aplicação corrente.
+        // @string
+        "defaultLocale"         => "",
+
+        // Indica se deve ser usado o sistema de legendas.
+        // @bool
+        "isUseLabels"           => false,
+
+        // Array associativo contendo os valores padrões para as rotas
+        // da aplicação.
+        //
+        // Os valores aqui definidos valerão para TODAS as rotas de TODOS os
+        // controllers da aplicação e serão aplicados exceto se, em cada controller
+        // e em cada definição de rota, o mesmo valor não for explicitamente definido
+        // de forma diferente.
+        //
+        // Conheça mais sobre estes valores no tópico sobre configuração de rotas.
+        // @array
+        "defaultRouteConfig"    => [],
+
+        // Caminho relativo até a view que deve ser enviada ao
+        // UA em caso de erros na aplicação.
+        // @string
+        "pathToErrorView"       => ""
+    ];
+}
+</pre>
+
+
+<hr />
+<a href="/documentation/controller">Criando um Controller</a>

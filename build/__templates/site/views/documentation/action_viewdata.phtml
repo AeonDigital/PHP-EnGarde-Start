@@ -1,0 +1,26 @@
+<h1><?php echo $viewData->viewTitle; ?></h1>
+<p>
+    Locale: <?php echo $this->routeConfig->getResponseLocale(); ?><br />
+    Mime: <?php echo $this->routeConfig->getResponseMime(); ?><br />
+    MimeType: <?php echo $this->routeConfig->getResponseMimeType(); ?><br />
+</p>
+
+
+<hr />
+
+
+<h2>$this->viewData</h2>
+<p>
+    Trata-se de um objeto <b>stdClass</b> que tem como função coletar TODA informação que será
+    posteriormente usada em sua view.
+    <br />
+    Note, é um objeto de informações que o UA está requisitando então não adicione aqui informações
+    e dados que tenham como função servir para a construção da view ou para uma finalidade diferente
+    desta.<br />
+    Para todas as demais finalidades, use o objeto $this->viewConfig (a seguir).
+</p>
+
+
+
+<hr />
+<a href="/documentation/action_viewconfig">Objeto ViewConfig</a>

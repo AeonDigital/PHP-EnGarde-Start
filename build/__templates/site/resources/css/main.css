@@ -1,0 +1,16 @@
+body {
+    background: url(/site/resources/img/logo.png) #FAFAFA no-repeat top right;
+}
+
+main {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    max-width: 800px;
+    padding: 20px;
+    color: #3a3a3a;
+}
+main h1 {color: #2C59AC;}
+main hr {margin: 30px 0;}
+main pre {
+    padding:10px;
+    background-color: #DFDFDF;
+}
