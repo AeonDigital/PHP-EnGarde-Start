@@ -16,6 +16,7 @@ ______________________________________________________________________________
 ## Instalação primária
 Instale em seu projeto usando o composer:
 **Via terminal**
+> composer init
 > composer require aeondigital/phpengardestart
 
 **Via composer.json**
