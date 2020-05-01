@@ -162,7 +162,7 @@ class Project
                 echo "::: - Configure o arquivo \"domain-config.php\".\n";
                 echo "::: - Configure o arquivo \"database-config.php\".\n";
                 echo ":::\n";
-                echo "::: Após estes itens o seu projeto está pronto para ser iniciado.\n\n";
+                echo "::: Após estes itens o seu projeto estará pronto para ser iniciado.\n\n";
             }
         }
     }
