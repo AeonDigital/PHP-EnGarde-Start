@@ -25,7 +25,7 @@
  */
 const ENV_DATABASE = [
     "PRD" => [
-        "site" => [
+        "projectName" => [
             "ANONYMOUS" => [
                 "dbType"            => "mysql",
                 "dbHost"            => "localhost",

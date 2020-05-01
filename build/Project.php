@@ -119,15 +119,45 @@ class Project
                 }
 
 
+                // Ajusta o Composer JSON
+                $composerJson = json_decode(\file_get_contents($rootPath . "/composer.json"));
+                $composerJson->autoload = (object)[
+                    "psr-4" => (object)[
+                        "AeonDigital\\EnGarde\\Build\\" => "build/"
+                    ],
+                    "classmap" => [
+                        "$projectTemplate/"
+                    ]
+                ];
+                \AeonDigital\Tools\JSON::save(
+                    $rootPath . "/composer.json",
+                    $composerJson,
+                    \JSON_PRETTY_PRINT | \JSON_UNESCAPED_SLASHES
+                );
+
+                // Ajusta o domain-config.php e o database-config.php
+                $domainConfig   = \file_get_contents($rootPath . "/domain-config.php");
+                \file_put_contents(
+                    $rootPath . "/domain-config.php",
+                    \str_replace("projectName", $projectTemplate, $domainConfig)
+                );
+
+                $databaseConfig = \file_get_contents($rootPath . "/database-config.php");
+                \file_put_contents(
+                    $rootPath . "/database-config.php",
+                    \str_replace("projectName", $projectTemplate, $databaseConfig)
+                );
+
+
+                \shell_exec("composer update");
+
+
 
                 echo "::: Instalação dos documentos iniciais executada com sucesso.\n";
                 echo ":::\n";
                 echo "::: Para finalizar, efetue as edições específicas dos seguintes documentos:\n";
                 echo "::: - composer.json\n";
                 echo ":::   1. Altere os dados principais do seu projeto.\n";
-                echo ":::   2. Adicione na sessão \"autoload\" a diretiva \"classmap\" apontando para o diretorio\n";
-                echo ":::      raiz da aplicação instalada.\n";
-                echo ":::   3. Rote o comando \"composer update\".\n";
                 echo ":::\n";
                 echo "::: - Configure o arquivo \"domain-config.php\".\n";
                 echo "::: - Configure o arquivo \"database-config.php\".\n";

@@ -48,13 +48,13 @@ const UPDATE_ROUTES = false;
  *
  * @var     HOSTED_APPS
  */
-const HOSTED_APPS = ["site"];
+const HOSTED_APPS = ["projectName"];
 /**
  * Nome da aplicação padrão para o domínio atual.
  *
  * @var     DEFAULT_APP
  */
-const DEFAULT_APP = "site";
+const DEFAULT_APP = "projectName";
 
 
 
