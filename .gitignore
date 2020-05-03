@@ -1,5 +1,10 @@
-vendor
-composer.lock
-AppRoutes.php
-database-config.php
-domain-config.php
+/site
+/vendor
+/.htaccess
+/apphost.config
+/composer.lock
+/database-config.php
+/domain-config.php
+/domain-error.phtml
+/index.php
+/web.config

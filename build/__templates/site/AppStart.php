@@ -27,11 +27,14 @@ class AppStart extends MainApplication
      * @var         array
      */
     protected array $defaultApplicationConfig = [
-        "locales"               => ["pt-BR", "en-US"],
-        "defaultLocale"         => "pt-BR",
-        "isUseLabels"           => true,
-        "defaultRouteConfig"    => [],
-        "pathToErrorView"       => "/app-error.phtml"
+        "locales"                   => ["pt-BR", "en-US"],
+        "defaultLocale"             => "pt-BR",
+        "isUseLabels"               => true,
+        "defaultRouteConfig"        => [],
+        "pathToErrorView"           => "/app-error.phtml",
+        "httpSubSystemNamespaces"   => [
+            "DEV" => "\\site\\subsystem\\http\\Flow"
+        ]
     ];
     /**
      * Configurações padrões para a aplicação.

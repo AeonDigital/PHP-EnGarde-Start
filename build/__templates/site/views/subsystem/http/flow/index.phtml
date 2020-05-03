@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html data-eg-html-prop="">
+    <head>
+        <title>EnGarde! Flow</title>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <metatags />
+        <style>
+            body {
+                background-color:#E9E9E9;
+                font-size:16px; font-family:"Georgia"; color:#1C386C;
+                text-align:left;
+            }
+            body h1 {font-size:8em; margin:0; padding:0; }
+            body h2 {font-size:3em; margin:0 0 0.5em 0; padding:0; }
+            body h3 {font-size:1em; line-height:1em; margin:0; padding:0; }
+            body pre {text-align:left; font-size:13px; padding:15px; background-color:#E1E1E1;}
+            body div {display:flex; width:100%;}
+            body div nav {width:50%;}
+            body div nav li {margin-bottom:8px;}
+        </style>
+    </head>
+    <body>
+        <main>
+            <?php
+                $fromRouteData      = $viewData->fromRouteData;
+                $atualRouteData     = $viewData->atualRouteData;
+                $atualRouteMethods  = $viewData->atualRouteMethods;
+                $goingRouteData     = $viewData->goingRouteData;
+            ?>
+            <h2><?php echo $atualRouteData["method"]; ?> <?php echo $atualRouteData["route"]; ?></h2>
+
+
+            <?php if ($atualRouteData["rawRoute"] === null) { ?>
+            <p>
+                O método HTTP <b><?php echo $atualRouteData["method"]; ?></b> não está configurado para ser usado
+                com a rota indicada (<?php echo $atualRouteData["route"]; ?>).
+                <br />
+                Por Favor, selecione um dos itens configurados na lista abaixo
+            </p>
+            <nav>
+                <ul>
+                    <?php foreach ($atualRouteMethods as $rConfig) { ?>
+                    <li>
+                        <a href="<?php echo $rConfig["link"]; ?>"><?php echo $rConfig["action"]; ?></a>
+                        <br />
+                        <?php echo $rConfig["description"]; ?>
+                    </li>
+                    <?php } ?>
+                </ul>
+            </nav>
+
+
+            <?php } else { ?>
+            <p><?php echo $atualRouteData["description"]; ?></p>
+            <pre><?php echo $atualRouteData["devDescription"]; ?></pre>
+
+
+            <div>
+                <nav>
+                    <h3>Vindo de:</h3>
+                    <?php if ($fromRouteData !== []) { ?>
+                    <ul>
+                        <li>
+                            <a href="<?php echo $fromRouteData["link"]; ?>"><?php echo $fromRouteData["action"]; ?></a>
+                            <br />
+                            <?php echo $fromRouteData["description"]; ?>
+                        </li>
+                    </ul>
+                    <?php } ?>
+                </nav>
+                <nav>
+                    <h3>Indo para:</h3>
+                    <ul>
+                        <?php foreach ($goingRouteData as $rConfig) { ?>
+                        <li>
+                            <a href="<?php echo $rConfig["link"]; ?>"><?php echo $rConfig["action"]; ?></a>
+                            <br />
+                            <?php echo $rConfig["description"]; ?>
+                        </li>
+                        <?php } ?>
+                    </ul>
+                </nav>
+            </div>
+            <?php } ?>
+        </main>
+    </body>
+</html>

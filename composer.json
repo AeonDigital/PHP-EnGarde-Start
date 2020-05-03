@@ -1,30 +1,33 @@
 {
-    "name": "aeondigital/phpengardestart",
-    "description": "Projeto inicial usando o Micro Framework EnGarde!",
-    "version": "v0.5.0-beta",
-    "time": "2020-05-01",
-    "type": "project",
-    "authors": [
-        {
-            "name": "Rianna Cantarelli",
-            "email": "rianna.aeon@gmail.com",
-            "homepage": "http://aeondigital.com.br",
-            "role": "developer"
-        }
-    ],
-    "minimum-stability": "dev",
-    "require": {
-        "php": ">=7.4",
-        "aeondigital/phpengarde": "v0.5.0-beta"
-    },
-    "autoload": {
-        "psr-4": {
-            "AeonDigital\\EnGarde\\Build\\": "build/"
-        }
-    },
-    "scripts": {
-        "build-project": [
-            "AeonDigital\\EnGarde\\Build\\Project::start"
-        ]
-    }
+	"name": "aeondigital/phpengardestart",
+	"description": "Projeto inicial usando o Micro Framework EnGarde!",
+	"version": "v0.5.5-beta",
+	"time": "2020-05-01",
+	"type": "project",
+	"authors": [
+		{
+			"name": "Rianna Cantarelli",
+			"email": "rianna.aeon@gmail.com",
+			"homepage": "http://aeondigital.com.br",
+			"role": "developer"
+		}
+	],
+	"minimum-stability": "dev",
+	"require": {
+		"php": ">=7.4",
+		"aeondigital/phpengarde": ">=v0.5.5-beta"
+	},
+	"autoload": {
+		"psr-4": {
+			"AeonDigital\\EnGarde\\Build\\": "build/"
+		},
+		"classmap": [
+			"site/"
+		]
+	},
+	"scripts": {
+		"build-project": [
+			"AeonDigital\\EnGarde\\Build\\Project::start"
+		]
+	}
 }
