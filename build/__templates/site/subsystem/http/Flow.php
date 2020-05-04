@@ -79,7 +79,14 @@ class Flow implements iResponseHandler
      *
      * @var         array
      */
-    private array $goingRouteData = [];
+    private array $goingToRouteData = [];
+    /**
+     * Coleção de todas as rotas existentes na aplicação.
+     * Apenas deve ser carregado em caso de estar em modo de formulário.
+     *
+     * @var         array
+     */
+    private array $collectionOfAllRoutesData = [];
 
 
     /**
@@ -153,6 +160,42 @@ class Flow implements iResponseHandler
                 $this->collectGoingToRoutesData($config);
             }
         }
+
+
+        $formState = $this->serverConfig->getServerRequest()->getParam("form");
+        if ($formState !== null) {
+            $appRoutes = include $this->serverConfig->getApplicationConfig()->getPathToAppRoutes(true);
+            foreach ($appRoutes as $type => $routes) {
+                foreach ($routes as $route => $config) {
+                    foreach ($config as $method => $cfg) {
+                        $useRoute = str_replace("/^\/", "/", $route);
+                        $useRoute = str_replace("\/", "/", $useRoute);
+                        $useRoute = str_replace("\\", "", $useRoute);
+                        $useRoute = str_replace("//", "", $useRoute);
+                        $this->collectionOfAllRoutesData[] = $this->retrieveRouteData($method, $useRoute);
+                    }
+                }
+            }
+            \usort($this->collectionOfAllRoutesData, function($a, $b) {
+                return strcmp($a["action"], $b["action"]);
+            });
+
+            if ($formState === "edit") {
+                // Prepara os dados que irão preencher o formulário.
+                $formData = \array_merge($this->atualRouteData, []);
+                $formData["goingTo"] = [];
+
+                unset($formData["rawRoute"]);
+                foreach($this->goingToRouteData as $rConfig) {
+                    unset($rConfig["rawRoute"]);
+                    $formData["goingTo"][] = $rConfig;
+                }
+                $this->atualRouteData["formData"] = $formData;
+            }
+            else {
+                $this->atualRouteData["formData"] = null;
+            }
+        }
     }
 
 
@@ -173,10 +216,11 @@ class Flow implements iResponseHandler
     {
         // Agrega informações no objeto viewData
         $viewData = (object)[
-            "fromRouteData"     => $this->fromRouteData,
-            "atualRouteData"    => $this->atualRouteData,
-            "atualRouteMethods" => $this->atualRouteMethods,
-            "goingRouteData"    => $this->goingRouteData,
+            "fromRouteData"             => $this->fromRouteData,
+            "atualRouteData"            => $this->atualRouteData,
+            "atualRouteMethods"         => $this->atualRouteMethods,
+            "goingToRouteData"          => $this->goingToRouteData,
+            "collectionOfAllRoutesData" => $this->collectionOfAllRoutesData
         ];
         $this->response = $this->response->withViewData($viewData);
 
@@ -231,7 +275,7 @@ class Flow implements iResponseHandler
         // Se o nome da aplicação está omitido na rota passada...
         $urlApplicationNamePart = "/" . $this->serverConfig->getApplicationName();
         if (\mb_str_starts_with($route, $urlApplicationNamePart) === false) {
-            $route = $urlApplicationNamePart . \rtrim($route, "/\\") . "/";
+            $route = $urlApplicationNamePart . \rtrim($route, "/\\");
         }
 
         $routeData   = [
@@ -409,9 +453,17 @@ class Flow implements iResponseHandler
                                 $splitAction[0],
                                 $splitAction[1],
                             );
-                            $rConfig["link"] .= "&from=" . $this->atualRouteData["rawLinkData"];
 
-                            $this->goingRouteData[] = $rConfig;
+                            if ($rConfig["rawRoute"] === null) {
+                                $rConfig["link"] .= "?_method=DEV&form=new";
+                                $rConfig["link"] .= "&newmethod=" . $rConfig["method"];
+                                $rConfig["link"] .= "&newroute=" . $rConfig["route"];
+                            }
+                            else {
+                                $rConfig["link"] .= "&from=" . $this->atualRouteData["rawLinkData"];
+                            }
+
+                            $this->goingToRouteData[] = $rConfig;
                         }
                     }
                 }

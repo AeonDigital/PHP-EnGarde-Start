@@ -22,188 +22,138 @@ class Flow extends MainController
         "description"       => "EnGarde! Flow",
         "allowedMimeTypes"  => ["html", "xhtml", "json"],
         "allowedMethods"    => ["GET"],
-        "isUseXHTML"        => true
+        "isUseXHTML"        => false
     ];
 
 
 
 
 
-    public static $registerRoute_GET_index = [
-        "description"       => "Início do fluxo de vendas.",
-        "devDescription"    => "
-            @indentbase
-
-            O seguinte texto é para ser formatado corretamente no sub-sistema ``Flow``.
-            Deve ser adequadamente alinhado para permitir uma leitura agradável.
-
-              - Isto é uma lista
-              - isto é outra lista.
-
-            Este software está licenciado sob a [Licença ADPL-v1.0](LICENSE).
-        ",
-        "allowedMethods"    => ["GET"],
-        "routes"            => ["/flow"],
-        "relationedRoutes"  => [
-            "flow" => [
-                "default" => [
-                    "GET /flow/produto/lista",
-                    //"GET /flow/produto/lista filtrada"
-                ],
-            ]
-        ],
-        "action"            => "index"
+    public static $registerRoute_POST_form = [
+        "description"       => "Permite editar ou salvar os dados para uma nova rota",
+        "allowedMethods"    => ["POST", "PUT"],
+        "routes"            => ["/flow/form"],
+        "action"            => "flowForm"
     ];
-    public function index() { }
+    public function flowForm()
+    {
+        $formData = $this->retrieveFormFieldset("flowRoute_");
+        if ($formData !== []) {
+            $tgtController  = to_system_path(__DIR__ . "/FlowActions.php");
+            $rawCode        = \file_get_contents($tgtController);
+            $strCode        = $this->createRouteDefinition($formData);
+            $actionExists   = false;
+
+
+            // Identifica se a rota atualmente sendo definida já existe no escopo
+            // do controller.
+            require_once $tgtController;
+            $controllerReflection = new \ReflectionClass(
+                $this->serverConfig->getApplicationName() . "\\controllers\\FlowActions"
+            );
+            $staticProperties = $controllerReflection->getStaticProperties();
+            if (\is_array($staticProperties) === true && \count($staticProperties) > 0) {
+                foreach ($staticProperties as $propName => $value) {
+                    if ($propName === $this->staticRegisterName) {
+                        $actionExists = true;
+                    }
+                }
+            }
+
+
+
+            // Se está adicionando uma nova rota...
+            if ($actionExists === false) {
+                $strCode .= "\n\n\n\n\n    // @INSERT NEW ACTION HERE";
+                $rawCode = \str_replace("// @INSERT NEW ACTION HERE", $strCode, $rawCode);
+            }
+            else {
+                $useRegex = "/(\/\/ @ini " . $this->staticRegisterName . ")([\s\S]*)(\/\/ @end " . $this->staticRegisterName . ")/";
+                $rawCode = \preg_replace($useRegex, $strCode, $rawCode);
+            }
+
+
+            \file_put_contents($tgtController, $rawCode);
+            \redirect($formData["route"] . "?_method=DEV");
+        }
+    }
 
 
 
 
+    private string $staticRegisterName = "";
+    /**
+     * Cria o código de uma rota com os dados indicados.
+     *
+     * @param       array $routeData
+     *
+     * @return      string
+     */
+    private function createRouteDefinition(array $routeData) : string
+    {
+        \extract($routeData);
 
-    public static $registerRoute_GET_produto_lista = [
-        "description"       => "Lista de produtos",
-        "devDescription"    => "
-            @indentbase
-
-            Nesta tela devem estar presentes todos os produtos disponíveis para a compra.
-            Cada produto deve ser mostrado com os seguintes dados:
-              - Imagem
-              - Nome
-              - Categoria
-              - Preço
-              - Selo de Promoção
-
-            O usuário precisa ter acesso a um filtro para seleção dos produtos.
-            O filtro deve funcionar seguindo os seguintes critérios:
-              - Nome        ['case insensitive' e 'ignorar acentuação e glifos']
-              - Categoria   [ select com os itens disponíveis ]
-              - Preço       [ 2 caixas de texto -> DE; ATÉ ]
-              - Selo        [ checkbox ]
-        ",
-        "allowedMethods"    => ["GET"],
-        "routes"            => ["/flow/produto/lista"],
-        "relationedRoutes"  => [
-            "flow" => [
-                "default" => [
-                    //"GET /flow/produto/lista filtrada",
-                    "GET /flow/produto/detalhe"
-                ],
-                "filtrada" => [
-                    "GET /flow/produto/lista",
-                    "GET /flow/produto/detalhe"
-                ]
-            ]
-        ],
-        "action"            => "produto_lista"
-    ];
-    public function produto_lista() { }
+        //
+        // Formata o nome da rota para seu registro.
+        $internalActionName = \str_replace("/", "_", trim($route, "\\/"));
+        $internalActionName = \str_replace(
+            $this->serverConfig->getApplicationName() . "_",
+            "",
+            $internalActionName
+        );
+        $this->staticRegisterName = "registerRoute_" . $method . "_" . $internalActionName;
 
 
 
+        //
+        // Corrige valor de devDescription
+        $devDesc = ["\n            @indentbase"];
+        $devDescription = \explode("\n", $devDescription);
+        foreach ($devDescription as $line) {
+            $devDesc[] = "            " . \str_replace("\"", "'", $line);
+        }
+        $devDescription = \implode("\n", $devDesc);
 
 
-    public static $registerRoute_GET_produto_detalhe = [
-        "description"       => "Detalhe de produtos",
-        "devDescription"    => "
-            @indentbase
-
-            Nesta tela deve ser apresentados todos os dados do produto escolhido para que o
-            usuário possa ter acesso as informações pertinentes.
-
-            As seguintes informações devem estar disponíveis:
-              - Imagem [ carrocel de imagens]
-              - Nome
-              - Categoria
-              - Preço
-              - Selo de Promoção
-              - Características do produto
-              - Informações sobre garantia
-              - Informações sobre entrega (preço, prazo...)
-              - Avaliações e Mensagens de outros compradores.
-        ",
-        "allowedMethods"    => ["GET"],
-        "routes"            => ["/flow/produto/detalhe"],
-        "relationedRoutes"  => [
-            "flow" => [
-                "default" => [
-                    "GET /flow/produto/lista",
-                    "GET /flow/carrinho",
-                ],
-                "carrinho" => [
-                    "GET /flow/carrinho"
-                ]
-            ]
-        ],
-        "action"            => "produto_detalhe"
-    ];
-    public function produto_detalhe() { }
+        //
+        // Prepara as rotas relacionadas
+        $flow = [];
+        if (isset($selected) === true) {
+            if (\count($selected) > 0) {
+                foreach ($selected as $goingTo) {
+                    $flow[] = "\"" . \str_replace(
+                        "/" . $this->serverConfig->getApplicationName() . "/",
+                        "/",
+                        $goingTo
+                    ) . "\"";
+                }
+            }
+        }
 
 
-
-
-
-    public static $registerRoute_GET_carrinho = [
-        "description"       => "Mostra os itens no carrinho de compras",
-        "devDescription"    => "
-            @indentbase
-
-            Aqui deve ser mostrada uma tabela contendo os itens que o usuário selecionou.
-            Na tabela deve conter:
-            - Produto
-            - Quantidade [ e uma forma de que o usuário possa alterá-la ]
-            - Valor unitário
-            - Valor total [ valor em função da quantidade de itens ]
-            - Excluir [ botão que permita remover o item do carrinho ]
-        ",
-        "allowedMethods"    => ["GET"],
-        "routes"            => ["/flow/carrinho"],
-        "relationedRoutes"  => [
-            "flow" => [
-                "default" => [
-                    "GET /flow/produto/lista",
-                    "GET /flow/checkout",
-                ],
-                "carrinho" => [
-                    "GET /flow/carrinho"
-                ]
-            ]
-        ],
-        "action"            => "carrinho"
-    ];
-    public function carrinho() { }
+        $str    = [];
+        $str[]  = "// @ini " . $this->staticRegisterName;
+        $str[]  = "    public static \$" . $this->staticRegisterName . " = [";
+        $str[]  = "        \"description\" => \"$description\",";
+        $str[]  = "        \"devDescription\" => \"$devDescription\",";
+        $str[]  = "        \"allowedMethods\" => [\"$method\"],";
+        $str[]  = "        \"routes\"         => [\"$route\"],";
+        if (\count($flow) > 0) {
+            $str[]  = "        \"relationedRoutes\"         => [";
+            $str[]  = "            \"flow\" => [";
+            $str[]  = "                \"default\" => [";
+            $str[]  = "                    " . \implode(",\n                    ", $flow);
+            $str[]  = "                ]";
+            $str[]  = "            ]";
+            $str[]  = "        ],";
+        }
+        $str[]  = "        \"action\"         => \"$internalActionName\"";
+        $str[]  = "    ];";
+        $str[]  = "    public function $internalActionName() { }";
+        $str[]  = "    // @end " . $this->staticRegisterName;
 
 
 
-
-
-    public static $registerRoute_GET_checkout = [
-        "description"       => "Apresenta para o usuário o formulário de pagamento",
-        "devDescription"    => "
-            @indentbase
-
-            Nesta tela devem ser apresentadas ao usuário as formas de pagamento.
-              - Boleto
-              - Cartão de Crédito
-              - Débito em Conta
-
-            Ao finalizar o pagamento, uma mensagem de sucesso deve ser mostrada e
-            o usuário deve ter acesso a um único botão indicando 'Voltar para a home'
-
-            Em caso de erro ao realizar o procedimento deve ser mostrada para o
-            usuário uma mensagem indicando o motivo e permitindo que ele possa, se quiser,
-            realizar uma nova tentativa.
-        ",
-        "allowedMethods"    => ["GET"],
-        "routes"            => ["/flow/checkout"],
-        "relationedRoutes"  => [
-            "flow" => [
-                "default" => [
-                    "GET /flow",
-                    "GET /flow/produto/lista",
-                ]
-            ]
-        ],
-        "action"            => "checkout"
-    ];
-    public function checkout() { }
+        return \implode("\n", $str);
+    }
 }

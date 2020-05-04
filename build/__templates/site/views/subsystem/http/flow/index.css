@@ -1,0 +1,54 @@
+body {
+    background-color:#E9E9E9;
+    font-size:16px; font-family:Georgia, 'Times New Roman', Times, serif; color:#1C386C;
+    text-align:left;
+}
+body h1 {font-size:8em; margin:0; padding:0; }
+body h2 {font-size:3em; margin:0 0 0.5em 0; padding:0; }
+body h3 {font-size:1em; line-height:1em; margin:0; padding:0; }
+body pre {text-align:left; font-size:13px; padding:15px; background-color:#E1E1E1;}
+body form {width:70%;}
+body form fieldset {border:none; padding:20px; margin:0;}
+body form fieldset div {display:inline-block; width:100%; padding-bottom:15px;}
+body form fieldset div label {display:block; font-size:20px; padding-bottom:5px;}
+
+
+.coll {display:flex; width:100%;}
+.coll > * {width:50%;}
+.coll > select[multiple] {width:45%; height:100px;}
+.coll > select[multiple] + select {margin-left:10%;}
+.coll ul li {margin-bottom:8px;}
+
+.actions {
+    display:flex; width:100%;
+    flex-direction:row-reverse;
+}
+.actions + .actions {margin-top:20px;}
+.actions .btn {
+    border:none;
+    display:inline-block;
+    padding:5px 20px;
+    background-color:#1C386C; color:#E9E9E9;
+    text-decoration:none;
+    cursor:pointer;
+    margin-left:15px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 16px;
+}
+.actions .btn:hover {
+    background-color:#3D4D6A;
+}
+
+
+
+textarea,
+select,
+input {
+    font-size:1em; font-family:Georgia, 'Times New Roman', Times, serif; color:#1C386C;
+}
+textarea {font-family: 'Courier New', Courier, monospace;}
+
+.w100 {width:100%;}
+.w50 {width:50%;}
+
+.h160 {height:160px;}

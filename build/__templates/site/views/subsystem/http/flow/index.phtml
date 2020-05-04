@@ -6,74 +6,98 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <metatags />
-        <style>
-            body {
-                background-color:#E9E9E9;
-                font-size:16px; font-family:"Georgia"; color:#1C386C;
-                text-align:left;
-            }
-            body h1 {font-size:8em; margin:0; padding:0; }
-            body h2 {font-size:3em; margin:0 0 0.5em 0; padding:0; }
-            body h3 {font-size:1em; line-height:1em; margin:0; padding:0; }
-            body pre {text-align:left; font-size:13px; padding:15px; background-color:#E1E1E1;}
-            body div {display:flex; width:100%;}
-            body div nav {width:50%;}
-            body div nav li {margin-bottom:8px;}
-        </style>
+        <link href="/site/views/subsystem/http/flow/index.css" rel="stylesheet" />
+        <script src="/site/views/subsystem/http/flow/index.js"></script>
     </head>
     <body>
         <main>
-            <?php
-                $fromRouteData      = $viewData->fromRouteData;
-                $atualRouteData     = $viewData->atualRouteData;
-                $atualRouteMethods  = $viewData->atualRouteMethods;
-                $goingRouteData     = $viewData->goingRouteData;
-            ?>
-            <h2><?php echo $atualRouteData["method"]; ?> <?php echo $atualRouteData["route"]; ?></h2>
+            <form id="form" method="post" action="/flow/form">
+                <?php
+                    $fromRouteData              = $viewData->fromRouteData;
+                    $atualRouteData             = $viewData->atualRouteData;
+                    $atualRouteMethods          = $viewData->atualRouteMethods;
+                    $goingToRouteData           = $viewData->goingToRouteData;
+                    $collectionOfAllRoutesData  = $viewData->collectionOfAllRoutesData;
+
+                    $openEditMode       = $this->serverConfig->getServerRequest()->getParam("form");
+                    if ($openEditMode !== null) {
+                        $useMethod = (($openEditMode === "new") ? "PUT" : "POST");
+                ?>
+                <input type="hidden" name="_method" value="<?php echo $useMethod; ?>" />
+                <fieldset>
+                    <script>
+                        var appName = '/<?php echo $this->serverConfig->getApplicationName(); ?>';
+                        var formData = <?php echo json_encode($atualRouteData["formData"]); ?>;
+                        var collectionOfAllRoutesData = <?php echo json_encode($collectionOfAllRoutesData); ?>;
+                        var goingToRouteData = <?php echo json_encode($goingToRouteData); ?>;
+                    </script>
+                    <div>
+                        <label>Indique a rota</label>
+                        <select id="flowRoute_method" name="flowRoute_method">
+                            <option value="GET">GET</option>
+                            <option value="POST">POST</option>
+                            <option value="PUT">PUT</option>
+                            <option value="PATCH">PATCH</option>
+                            <option value="DELETE">DELETE</option>
+                        </select>
+                        /<?php echo $this->serverConfig->getApplicationName(); ?>
+                        <input type="text" class="w50"
+                                id="flowRoute_route" name="flowRoute_route"  />
+                    </div>
+                    <div>
+                        <label>Descrição</label>
+                        <input type="text" class="w100"
+                                id="flowRoute_description" name="flowRoute_description"
+                                maxlength="250" />
+                    </div>
+                    <div>
+                        <label>Informações Técnicas</label>
+                        <textarea id="flowRoute_devDescription" name="flowRoute_devDescription"
+                                class="w100 h160"></textarea>
+                    </div>
+                    <div>
+                        <label>Vai para:</label>
+                        <div class="coll">
+                            <select id="flowRoute_origin"
+                                data-multiple-target="flowRoute_selected" multiple="multiple">
+                            </select>
+                            <select id="flowRoute_selected" name="flowRoute_selected[]"
+                                data-multiple-target="flowRoute_origin" multiple="multiple">
+                            </select>
+                        </div>
+                        <input id="flowRoute_newRoute" value="" class="w100" placeholder="Nova rota" />
+                    </div>
+                    <div class="actions">
+                        <?php
+                            $backLink = $atualRouteData["link"];
+                            $fromLink = $this->serverConfig->getServerRequest()->getParam("from");
+                            if ($fromLink !== null) {
+                                $backLink .= "&from=" . urlencode($fromLink);
+                            }
+                        ?>
+                        <button type="submit" class="btn">Salvar</button>
+                        <a href="javascript:history.back(-1);" class="btn">Voltar</a>
+                    </div>
+                    <div class="actions">
+                        <a href="/flow?_method=DEV" class="btn">Ir para o início</a>
+                    </div>
+                </fieldset>
+                <?php
+                    } else {
+                ?>
+                <h2><?php echo $atualRouteData["method"]; ?> <?php echo $atualRouteData["route"]; ?></h2>
 
 
-            <?php if ($atualRouteData["rawRoute"] === null) { ?>
-            <p>
-                O método HTTP <b><?php echo $atualRouteData["method"]; ?></b> não está configurado para ser usado
-                com a rota indicada (<?php echo $atualRouteData["route"]; ?>).
-                <br />
-                Por Favor, selecione um dos itens configurados na lista abaixo
-            </p>
-            <nav>
-                <ul>
-                    <?php foreach ($atualRouteMethods as $rConfig) { ?>
-                    <li>
-                        <a href="<?php echo $rConfig["link"]; ?>"><?php echo $rConfig["action"]; ?></a>
-                        <br />
-                        <?php echo $rConfig["description"]; ?>
-                    </li>
-                    <?php } ?>
-                </ul>
-            </nav>
-
-
-            <?php } else { ?>
-            <p><?php echo $atualRouteData["description"]; ?></p>
-            <pre><?php echo $atualRouteData["devDescription"]; ?></pre>
-
-
-            <div>
+                <?php if ($atualRouteData["rawRoute"] === null) { ?>
+                <p>
+                    O método HTTP <b><?php echo $atualRouteData["method"]; ?></b> não está configurado para ser usado
+                    com a rota indicada (<?php echo $atualRouteData["route"]; ?>).
+                    <br />
+                    Por Favor, selecione um dos itens configurados na lista abaixo
+                </p>
                 <nav>
-                    <h3>Vindo de:</h3>
-                    <?php if ($fromRouteData !== []) { ?>
                     <ul>
-                        <li>
-                            <a href="<?php echo $fromRouteData["link"]; ?>"><?php echo $fromRouteData["action"]; ?></a>
-                            <br />
-                            <?php echo $fromRouteData["description"]; ?>
-                        </li>
-                    </ul>
-                    <?php } ?>
-                </nav>
-                <nav>
-                    <h3>Indo para:</h3>
-                    <ul>
-                        <?php foreach ($goingRouteData as $rConfig) { ?>
+                        <?php foreach ($atualRouteMethods as $rConfig) { ?>
                         <li>
                             <a href="<?php echo $rConfig["link"]; ?>"><?php echo $rConfig["action"]; ?></a>
                             <br />
@@ -82,8 +106,58 @@
                         <?php } ?>
                     </ul>
                 </nav>
-            </div>
-            <?php } ?>
+
+
+                <?php } else { ?>
+                <p><?php echo $atualRouteData["description"]; ?></p>
+                <pre><?php echo $atualRouteData["devDescription"]; ?></pre>
+
+
+                <div class="coll">
+                    <nav>
+                        <h3>Vindo de:</h3>
+                        <?php if ($fromRouteData !== []) { ?>
+                        <ul>
+                            <li>
+                                <a href="<?php echo $fromRouteData["link"]; ?>">
+                                    <?php echo $fromRouteData["action"]; ?>
+                                </a>
+                                <br />
+                                <?php echo $fromRouteData["description"]; ?>
+                            </li>
+                        </ul>
+                        <?php } ?>
+                    </nav>
+                    <nav>
+                        <h3>Indo para:</h3>
+                        <ul>
+                            <?php foreach ($goingToRouteData as $rConfig) { ?>
+                            <li>
+                                <a href="<?php echo $rConfig["link"]; ?>"><?php echo $rConfig["action"]; ?></a>
+                                <br />
+                                <?php echo $rConfig["description"]; ?>
+                            </li>
+                            <?php } ?>
+                        </ul>
+                    </nav>
+                </div>
+
+                <div class="actions">
+                    <?php
+                        $editLink = $atualRouteData["link"];
+                        if ($fromRouteData !== []) {
+                            $editLink .= "&from=" . $fromRouteData["rawLinkData"];
+                        }
+                        $editLink .= "&form=edit";
+                    ?>
+                    <a href="?_method=DEV&form=new" class="btn">Novo</a>
+                    <a href="<?php echo $editLink; ?>" class="btn">Editar</a>
+                </div>
+                <div class="actions">
+                    <a href="/flow?_method=DEV" class="btn">Ir para o início</a>
+                </div>
+                <?php } } ?>
+            </form>
         </main>
     </body>
 </html>
