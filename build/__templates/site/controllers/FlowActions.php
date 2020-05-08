@@ -122,7 +122,7 @@ class FlowActions extends MainController
             @indentbase
             Nesta tela deve ser apresentados todos os dados do produto escolhido para que o
             usuário possa ter acesso as informações pertinentes.
-            
+
             As seguintes informações devem estar disponíveis:
                 - Imagem [ carrocel de imagens]
                 - Nome
@@ -192,10 +192,10 @@ class FlowActions extends MainController
                 - Boleto
                 - Cartão de Crédito
                 - Débito em Conta
-            
+
             Ao finalizar o pagamento, uma mensagem de sucesso deve ser mostrada e
             o usuário deve ter acesso a um único botão indicando 'Voltar para a home'
-            
+
             Em caso de erro ao realizar o procedimento deve ser mostrada para o
             usuário uma mensagem indicando o motivo e permitindo que ele possa, se quiser,
             realizar uma nova tentativa.
