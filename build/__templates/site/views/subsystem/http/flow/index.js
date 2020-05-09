@@ -48,7 +48,7 @@ window.onload = function () {
         document.getElementById('flowRoute_selected').ondblclick = actionMoveIntoMultipleSelect;
         document.getElementById('flowRoute_newRoute').onkeypress = preventOnEnter;
         document.getElementById('flowRoute_newRoute').onkeyup = addNewRoute;
-
+        document.getElementById('btnExcluir').onclick = onDeleteRoute;
     }
 };
 
@@ -110,7 +110,20 @@ var preventOnEnter = function (e) {
         e.preventDefault();
         return false;
     }
-}
+};
+var onDeleteRoute = function(e) {
+    var msg = 'Esta ação não pode ser desfeita.\n\n';
+    msg += 'Você tem certeza que deseja excluir esta rota?\n';
+    msg += 'Com isto, todos os pontos do fluxo que apontam para este item precisarão ser alterados manualmente.';
+    if (confirm(msg) === false) {
+        e.preventDefault();
+        return false;
+    }
+    else {
+        document.getElementById('_method').value = 'DELETE';
+        return true;
+    }
+};
 
 
 

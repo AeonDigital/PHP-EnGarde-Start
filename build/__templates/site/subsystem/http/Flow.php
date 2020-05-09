@@ -329,7 +329,7 @@ class Flow implements iResponseHandler
      *
      * @return      array
      */
-    private function retrieveRouteDataFromParam(string $param) : array
+    public function retrieveRouteDataFromParam(string $param) : array
     {
         $r = [];
         $paramValue = $this->serverConfig->getServerRequest()->getParam($param);
@@ -344,7 +344,7 @@ class Flow implements iResponseHandler
         }
         else {
             $err = "";
-            $paramValue = \json_decode($paramValue, true);
+            $paramValue = \json_decode(\urldecode($paramValue), true);
             if (\key_exists("method", $paramValue) === false) {
                 $err = "Invalid \"$param\" parameter. Lost key \"method\".";
             }

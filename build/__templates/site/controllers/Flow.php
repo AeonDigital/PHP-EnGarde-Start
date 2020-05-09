@@ -4,7 +4,7 @@ declare (strict_types=1);
 namespace site\controllers;
 
 use AeonDigital\EnGarde\MainController as MainController;
-
+use site\subsystem\http\Flow as ResponseFlow;
 
 
 
@@ -31,7 +31,7 @@ class Flow extends MainController
 
     public static $registerRoute_POST_form = [
         "description"       => "Permite editar ou salvar os dados para uma nova rota",
-        "allowedMethods"    => ["POST", "PUT"],
+        "allowedMethods"    => ["POST", "PUT", "DELETE"],
         "routes"            => ["/flow/form"],
         "action"            => "flowForm"
     ];
@@ -42,6 +42,7 @@ class Flow extends MainController
             $tgtController  = to_system_path(__DIR__ . "/FlowActions.php");
             $rawCode        = \file_get_contents($tgtController);
             $strCode        = $this->createRouteDefinition($formData);
+            $httpMethod     = $this->serverConfig->getRequestMethod();
             $actionExists   = false;
 
 
@@ -63,13 +64,30 @@ class Flow extends MainController
 
 
             // Se está adicionando uma nova rota...
-            if ($actionExists === false) {
+            if ($actionExists === false && $httpMethod === "POST") {
                 $strCode .= "\n\n\n\n\n    // @INSERT NEW ACTION HERE";
                 $rawCode = \str_replace("// @INSERT NEW ACTION HERE", $strCode, $rawCode);
             }
             else {
-                $useRegex = "/(\/\/ @ini " . $this->staticRegisterName . ")([\s\S]*)(\/\/ @end " . $this->staticRegisterName . ")/";
-                $rawCode = \preg_replace($useRegex, $strCode, $rawCode);
+                $useRegex = "/(\/\/ @ini " .
+                $this->staticRegisterName . ")([\s\S]*)(\/\/ @end " . $this->staticRegisterName . ")/";
+
+                if ($httpMethod === "PUT") {
+                    $rawCode = \preg_replace($useRegex, $strCode, $rawCode);
+                }
+                elseif ($httpMethod === "DELETE") {
+                    $strCode = "\n\n\n\n\n$strCode";
+                    $rawCode = \preg_replace($useRegex, "", $rawCode);
+
+                    $respFlow = new ResponseFlow(
+                        $this->serverConfig,
+                        $this->response
+                    );
+                    $fromRouteData = $respFlow->retrieveRouteDataFromParam("from");
+                    if ($fromRouteData !== []) {
+                        $formData["route"] = $fromRouteData["route"];
+                    }
+                }
             }
 
 
