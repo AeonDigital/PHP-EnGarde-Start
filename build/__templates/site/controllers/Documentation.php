@@ -44,7 +44,9 @@ class Documentation extends MainController
         "allowedMethods"    => ["GET"],
         "routes"            => ["/documentation/about"],
         "action"            => "about",
-        "view"              => "/documentation/about.phtml"
+        "view"              => "/documentation/about.phtml",
+        "isUseCache"        => true,
+        "cacheTimeout"      => 1
     ];
     public function about() {
         $this->viewData->pageTitle = "EnGarde! | Sobre";
