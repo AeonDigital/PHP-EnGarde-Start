@@ -38,7 +38,9 @@ window.onload = function () {
             let newroute = urlParams.get('newroute');
 
             document.getElementById('flowRoute_method').value = newmethod;
-            document.getElementById('flowRoute_route').value = newroute.replace(appName + '/', '/');
+            if (newroute !== null) {
+                document.getElementById('flowRoute_route').value = newroute.replace(appName + '/', '/');
+            }
         }
 
 

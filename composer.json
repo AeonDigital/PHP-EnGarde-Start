@@ -20,10 +20,7 @@
 	"autoload": {
 		"psr-4": {
 			"AeonDigital\\EnGarde\\Build\\": "build/"
-		},
-		"classmap": [
-			"site/"
-		]
+		}
 	},
 	"scripts": {
 		"build-project": [

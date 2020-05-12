@@ -21,7 +21,7 @@
 
                     $openEditMode       = $this->serverConfig->getServerRequest()->getParam("form");
                     if ($openEditMode !== null) {
-                        $useMethod  = (($openEditMode === "new") ? "PUT" : "POST");
+                        $useMethod  = (($openEditMode === "new") ? "POST" : "PUT");
                         $from       = $this->serverConfig->getServerRequest()->getParam("from");
                         if ($from !== "") {
                             $from = urlencode($from);
@@ -116,7 +116,7 @@
 
                 <?php } else { ?>
                 <p><?php echo $atualRouteData["description"]; ?></p>
-                <pre><?php echo $atualRouteData["devDescription"]; ?></pre>
+                <pre><?php echo \chunk_split($atualRouteData["devDescription"], 99); ?></pre>
 
 
                 <div class="coll">

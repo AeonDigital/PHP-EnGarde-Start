@@ -70,7 +70,9 @@ class Flow extends MainController
             }
             else {
                 $useRegex = "/(\/\/ @ini " .
-                $this->staticRegisterName . ")([\s\S]*)(\/\/ @end " . $this->staticRegisterName . ")/";
+                    $this->staticRegisterName .
+                    ")([\s\S]*)(\/\/ @end " .
+                    $this->staticRegisterName . ")/";
 
                 if ($httpMethod === "PUT") {
                     $rawCode = \preg_replace($useRegex, $strCode, $rawCode);
@@ -89,7 +91,6 @@ class Flow extends MainController
                     }
                 }
             }
-
 
             \file_put_contents($tgtController, $rawCode);
             \redirect($formData["route"] . "?_method=DEV");
