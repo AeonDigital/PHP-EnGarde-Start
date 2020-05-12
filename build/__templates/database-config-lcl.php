@@ -32,7 +32,7 @@ const ENV_DATABASE = [
                 "dbName"            => "database_name",
                 "dbUserName"        => "username",
                 "dbUserPassword"    => "password",
-                "dbSSLCA"           => ""
+                "dbSSLCA"           => null
             ]
         ]
     ]
