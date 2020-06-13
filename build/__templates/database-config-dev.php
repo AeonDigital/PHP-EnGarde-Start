@@ -26,7 +26,7 @@
 const ENV_DATABASE = [
     "DEV" => [
         "projectName" => [
-            "ANONYMOUS" => [
+            "Anonymous" => [
                 "dbType"            => "mysql",
                 "dbHost"            => "localhost",
                 "dbName"            => "database_name",

@@ -14,3 +14,20 @@ main pre {
     padding:10px;
     background-color: #DFDFDF;
 }
+
+.w200 {width:200px;}
+.align-right {text-align: right;}
+
+
+form > fieldset > div {padding:6px 0;}
+form > fieldset > div > label {display:block; padding:0 0 5px 0;}
+form > fieldset > div > input[type="text"],
+form > fieldset > div > input[type="password"] {padding:4px; box-sizing: border-box;}
+form > fieldset > div > button[type="submit"] {
+    padding:6px 18px; border:none; background-color: #2C59AC;
+    font:bold 14px/14px Georgia, 'Times New Roman', Times, serif;
+    color: #FAFAFA; cursor: pointer; margin:0;
+}
+form > fieldset > div > button[type="submit"]:hover {
+    background-color: #4a75c5;
+}

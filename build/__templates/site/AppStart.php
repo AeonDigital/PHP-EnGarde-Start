@@ -30,10 +30,13 @@ class AppStart extends MainApplication
         "locales"                   => ["pt-BR", "en-US"],
         "defaultLocale"             => "pt-BR",
         "isUseLabels"               => true,
-        "defaultRouteConfig"        => [],
         "pathToErrorView"           => "/app-error.phtml",
         "httpSubSystemNamespaces"   => [
             "DEV" => "\\site\\subsystem\\http\\Flow"
+        ],
+        "defaultRouteConfig"        => [
+            "isSecure"                  => true,
+            "isAutoLog"                 => true
         ]
     ];
     /**
@@ -43,19 +46,21 @@ class AppStart extends MainApplication
      * @var         array
      */
     protected array $defaultSecurityConfig = [
-        "isActive"              => false,
+        "isActive"              => true,
         "dataCookieName"        => "cname",
         "securityCookieName"    => "sname",
-        "routeToLogin"          => "login",
-        "routeToStart"          => "start",
-        "routeToResetPassword"  => "reset",
+        "routeToLogin"          => "/login",
+        "routeToStart"          => "/home",
+        "routeToResetPassword"  => "/resetpassword",
         "anonymousId"           => 1,
-        "sessionType"           => "local",
+        "sessionNamespace"      => "AeonDigital\\EnGarde\\SessionControl\\NativeDataBase",
         "isSessionRenew"        => true,
         "sessionTimeout"        => 40,
         "allowedFaultByIP"      => 50,
         "ipBlockTimeout"        => 50,
         "allowedFaultByLogin"   => 5,
-        "loginBlockTimeout"     => 20
+        "loginBlockTimeout"     => 20,
+        "allowedIPRanges"       => [],
+        "deniedIPRanges"        => []
     ];
 }

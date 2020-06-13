@@ -8,6 +8,12 @@ declare (strict_types=1);
 
 
 /**
+ * Indica se deve forçar a navegação usando HTTPS.
+ *
+ * @var     bool
+ */
+const FORCE_HTTPS = false;
+/**
  * Informa o tipo de ambiente onde a aplicação está rodando no momento.
  *
  * Valores comuns:
@@ -18,7 +24,7 @@ declare (strict_types=1);
  *  - ``LCL``   : Local
  *  - ``UTEST`` : Unit Test
  *
- * @var     ENVIRONMENT
+ * @var     string
  */
 const ENVIRONMENT = "PRD";
 /**
@@ -46,13 +52,13 @@ const UPDATE_ROUTES = false;
  * Array contendo o nome de cada aplicação que está hospedada no
  * domínio.
  *
- * @var     HOSTED_APPS
+ * @var     array
  */
 const HOSTED_APPS = ["projectName"];
 /**
  * Nome da aplicação padrão para o domínio atual.
  *
- * @var     DEFAULT_APP
+ * @var     string
  */
 const DEFAULT_APP = "projectName";
 
