@@ -13,11 +13,11 @@
         <main>
             <form id="form" method="post" action="/flow/form">
                 <?php
-                    $fromRouteData              = $viewData->fromRouteData;
-                    $atualRouteData             = $viewData->atualRouteData;
-                    $atualRouteMethods          = $viewData->atualRouteMethods;
-                    $goingToRouteData           = $viewData->goingToRouteData;
-                    $collectionOfAllRoutesData  = $viewData->collectionOfAllRoutesData;
+                    $fromRouteData              = $this->viewData->fromRouteData;
+                    $atualRouteData             = $this->viewData->atualRouteData;
+                    $atualRouteMethods          = $this->viewData->atualRouteMethods;
+                    $goingToRouteData           = $this->viewData->goingToRouteData;
+                    $collectionOfAllRoutesData  = $this->viewData->collectionOfAllRoutesData;
 
                     $openEditMode       = $this->serverConfig->getServerRequest()->getParam("form");
                     if ($openEditMode !== null) {
