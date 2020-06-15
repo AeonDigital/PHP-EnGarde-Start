@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
     <?php
-        $useCode        = $this->viewData->http->code;
-        $useMessage     = $this->viewData->http->message;
-        if ($this->viewData->isDebugMode === true && $this->viewData->environmentType !== "PRD") {
-            $useMessage = $this->viewData->debugLog->message;
+        $useCode        = $viewData->http->code;
+        $useMessage     = $viewData->http->message;
+        if ($viewData->isDebugMode === true && $viewData->environmentType !== "PRD") {
+            $useMessage = $viewData->debugLog->message;
         }
     ?>
     <head>
@@ -27,9 +27,9 @@
         <h1><?php echo $useCode; ?></h1>
         <h2><?php echo $useMessage; ?></h2>
         <?php
-        if ($this->viewData->isDebugMode === true && $this->viewData->environmentType !== "PRD") {
-            echo "<h3>rootPath: " . $this->viewData->rootPath . "</h3>";
-            html_print($this->viewData->debugLog);
+        if ($viewData->isDebugMode === true && $viewData->environmentType !== "PRD") {
+            echo "<h3>rootPath: " . $viewData->rootPath . "</h3>";
+            html_print($viewData->debugLog);
         }
         ?>
     </body>
