@@ -107,6 +107,18 @@ const REQUEST_MAX_POSTSIZE = 100;
  * @var     string
  */
 const DEFAULT_ERROR_VIEW = "/domain-error.phtml";
+/**
+ * Página de mensagens Http que deve ser usada para mostrar para
+ * o UA informações simples utilizando mensagens padrões do
+ * protocolo.
+ *
+ * O caminho deve ser definido a partir do diretório
+ * raiz do domínio.
+ *
+ * @var     string
+ */
+const DEFAULT_HTTP_MESSAGE_VIEW = "/domain-http.phtml";
+
 
 
 

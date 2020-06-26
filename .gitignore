@@ -6,5 +6,6 @@
 /database-config.php
 /domain-config.php
 /domain-error.phtml
+/domain-http.phtml
 /index.php
 /web.config

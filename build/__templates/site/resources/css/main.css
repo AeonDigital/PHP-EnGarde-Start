@@ -31,3 +31,5 @@ form > fieldset > div > button[type="submit"] {
 form > fieldset > div > button[type="submit"]:hover {
     background-color: #4a75c5;
 }
+
+form > fieldset > div > select {padding:4px 0;}

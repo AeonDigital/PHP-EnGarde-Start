@@ -47,49 +47,7 @@ class Home extends MainController
     public function index() {
         $this->viewData->pageTitle = "EnGarde!";
         $this->viewData->viewTitle = "EnGarde! Framework";
-    }
 
-
-
-
-    public static $registerRoute_GET_login = [
-        "description"       => "Login da aplicação..",
-        "allowedMethods"    => ["GET", "POST"],
-        "routes"            => ["/login"],
-        "action"            => "login",
-        "masterPage"        => "/masterPage.phtml",
-        "view"              => "/home/login.phtml",
-        "styleSheets"       => [
-            "/css/main.css"
-        ]
-    ];
-    public function login() {
-        $httpMethod = $this->serverConfig->getRequestMethod();
-        if ($httpMethod === "GET") {
-            $this->viewData->pageTitle = "EnGarde! Login";
-            $this->viewData->viewTitle = "EnGarde! Login";
-        }
-        elseif ($httpMethod === "POST") {
-            $securitySession = $this->serverConfig->getSecuritySession();
-            $securityConfig = $this->serverConfig->getSecurityConfig();
-            $formData = $this->retrieveFormFieldset("login_");
-
-            $this->routeConfig->setMasterPage("");
-            $this->routeConfig->setView("");
-
-            $securitySession->executeLogin(
-                $formData["userName"],
-                sha1($formData["userPassword"]) // <-- Ver questão de política de encriptação de senha
-            );
-            // <-- ver como se dará a comunicação de formulários... se é mesmo tudo assincrono usando js.
-            if ($securitySession->retrieveSecurityStatus() === SecurityStatus::UserSessionAuthenticated) {
-                $this->serverConfig->redirectTo(
-                    $securityConfig->getRouteToStart()
-                );
-            }
-            else {
-                $this->viewData->SecurityStatus = $securitySession->retrieveSecurityStatus();
-            }
-        }
+        $ee = $this->getQueryParams();
     }
 }

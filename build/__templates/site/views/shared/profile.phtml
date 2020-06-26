@@ -1,0 +1,20 @@
+<?php if ($this->isAuthenticated() === true) { ?>
+<form id="formUserChangeProfile" method="POST" action="/domainUser/ChangeUserProfile">
+    <input type="hidden" name="_method" value="POST" />
+    <input type="hidden" name="_mime" value="json" />
+    <fieldset>
+        <legend>Alterar Perfil</legend>
+        <div class="align-right">
+            <select name="userProfile">
+                <?php foreach ($this->retrieveUserProfiles() as $row) {
+                    $fName = $row["Name"];
+                    $selected = (($fName === $this->retrieveUserProfileName()) ? "selected=\"selected\"" : "");
+                ?>
+                <option value="<?php echo $fName; ?>" <?php echo $selected; ?>><?php echo $fName; ?></option>
+                <?php } ?>
+            </select>
+            <button type="submit">Alterar</button>
+        </div>
+    </fieldset>
+</form>
+<?php } ?>

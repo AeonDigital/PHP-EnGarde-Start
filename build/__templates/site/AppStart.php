@@ -31,6 +31,7 @@ class AppStart extends MainApplication
         "defaultLocale"             => "pt-BR",
         "isUseLabels"               => true,
         "pathToErrorView"           => "/app-error.phtml",
+        "pathToHttpMessageView"     => "/app-http.phtml",
         "httpSubSystemNamespaces"   => [
             "DEV" => "\\site\\subsystem\\http\\Flow"
         ],
@@ -50,7 +51,7 @@ class AppStart extends MainApplication
         "dataCookieName"        => "cname",
         "securityCookieName"    => "sname",
         "routeToLogin"          => "/login",
-        "routeToStart"          => "/home",
+        "routeToStart"          => "/",
         "routeToResetPassword"  => "/resetpassword",
         "anonymousId"           => 1,
         "sessionNamespace"      => "AeonDigital\\EnGarde\\SessionControl\\NativeDataBase",
