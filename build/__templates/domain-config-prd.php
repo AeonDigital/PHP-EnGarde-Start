@@ -61,6 +61,13 @@ const HOSTED_APPS = ["projectName"];
  * @var     string
  */
 const DEFAULT_APP = "projectName";
+/**
+ * Caso a aplicação esteja rodando em um subdiretório, defina aqui
+ * o caminho a partir da raiz do domínio.
+ *
+ * @var     string
+ */
+const ROOT_SUBPATH = "";
 
 
 
