@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  server-php:
+    image: aeondigital/php7.4-mysql:0.9.1
+    volumes:
+      - ./src:/var/www/html
+    ports:
+      - "80:80"
+    links:
+      - db
+
+
+  db:
+    image: mysql:8.0.27
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_DATABASE=docker
+      - MYSQL_USER=root
+      - MYSQL_ROOT_PASSWORD=docker-database
+    volumes:
+      - ./docker/mysql/volume:/var/lib/mysql
