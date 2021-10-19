@@ -2,7 +2,7 @@ version: '3'
 
 services:
   server-php:
-    image: aeondigital/php7.4-mysql:0.9.1
+    image: aeondigital/engarde-php7.4-apache-mysql:latest
     volumes:
       - ./src:/var/www/html
     ports:
@@ -17,8 +17,8 @@ services:
       - "3306:3306"
     environment:
       - MYSQL_ROOT_HOST=%
-      - MYSQL_DATABASE=docker
-      - MYSQL_USER=root
-      - MYSQL_ROOT_PASSWORD=docker-database
+      - MYSQL_DATABASE=docker-db
+      - MYSQL_USER=docker-user
+      - MYSQL_ROOT_PASSWORD=docker-passw
     volumes:
       - ./docker/mysql/volume:/var/lib/mysql
