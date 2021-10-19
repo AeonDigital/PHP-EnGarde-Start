@@ -2,7 +2,7 @@ version: '3'
 
 services:
   server-php:
-    image: aeondigital/php7.4-mysql:0.9.1
+    image: aeondigital/engarde-php7.4-apache-mysql:latest
     volumes:
       - ./src:/var/www/html
     ports:
