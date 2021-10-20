@@ -1,20 +1,19 @@
 version: '3'
 
 services:
-  server-php:
-    image: aeondigital/engarde-php7.4-apache-mysql:latest
+  server-apache-php:
+    image: aeondigital/engarde-apache-php-7.4
     volumes:
       - ./src:/var/www/html
     ports:
-      - "80:80"
+      - "8080:80"
     links:
       - db
 
 
-  db:
+  server-db-mysql:
     image: mysql:8.0.27
-    container_name: db
-    restart: always
+    container_name: engarde-server-db-mysql
     ports:
       - "3306:3306"
     environment:
