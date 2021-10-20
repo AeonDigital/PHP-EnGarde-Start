@@ -13,7 +13,7 @@ TAG=${MAJOR}.${MINOR}.${HASH}
 # Compila a imagem
 # Registra/atualiza a mesma dentro do docker
 build:
-	docker build -t engarde-apache-php-7.4 ./docker/
+	docker build -t engarde-apache-php-7.4 ./services/web-server/apache-php-7.4
 
 #
 # Efetua login no Docker Hub
