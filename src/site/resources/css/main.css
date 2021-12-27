@@ -1,0 +1,35 @@
+body {
+    background: url(/site/resources/img/logo.png) #FAFAFA no-repeat top right;
+}
+
+main {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    max-width: 800px;
+    padding: 20px;
+    color: #3a3a3a;
+}
+main h1 {color: #2C59AC;}
+main hr {margin: 30px 0;}
+main pre {
+    padding:10px;
+    background-color: #DFDFDF;
+}
+
+.w200 {width:200px;}
+.align-right {text-align: right;}
+
+
+form > fieldset > div {padding:6px 0;}
+form > fieldset > div > label {display:block; padding:0 0 5px 0;}
+form > fieldset > div > input[type="text"],
+form > fieldset > div > input[type="password"] {padding:4px; box-sizing: border-box;}
+form > fieldset > div > button[type="submit"] {
+    padding:6px 18px; border:none; background-color: #2C59AC;
+    font:bold 14px/14px Georgia, 'Times New Roman', Times, serif;
+    color: #FAFAFA; cursor: pointer; margin:0;
+}
+form > fieldset > div > button[type="submit"]:hover {
+    background-color: #4a75c5;
+}
+
+form > fieldset > div > select {padding:4px 0;}

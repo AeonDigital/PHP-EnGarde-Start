@@ -1,0 +1,30 @@
+<h1><?php echo $this->viewData->viewTitle; ?></h1>
+<p>
+    Locale: <?php echo $this->routeConfig->getResponseLocale(); ?><br />
+    Mime: <?php echo $this->routeConfig->getResponseMime(); ?><br />
+    MimeType: <?php echo $this->routeConfig->getResponseMimeType(); ?><br />
+</p>
+
+
+<hr />
+
+<form id="formLogin" method="POST" action="/login">
+    <input type="hidden" name="_method" value="POST" />
+    <input type="hidden" name="_mime" value="json" />
+    <fieldset>
+        <legend>Informe suas credenciais de acesso</legend>
+        <div>
+            <label for="login_userName">Usuário:</label>
+            <input type="text" class="w200" required="required"
+                id="login_userName" name="login_userName" />
+        </div>
+        <div>
+            <label for="login_userPassword">Senha:</label>
+            <input type="password" class="w200" required="required"
+                id="login_userPassword" name="login_userPassword" />
+        </div>
+        <div class="w200 align-right">
+            <button type="submit">Enviar</button>
+        </div>
+    </fieldset>
+</form>

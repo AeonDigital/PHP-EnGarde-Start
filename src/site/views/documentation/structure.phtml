@@ -1,0 +1,43 @@
+<h1><?php echo $this->viewData->viewTitle; ?></h1>
+<p>
+    Locale: <?php echo $this->routeConfig->getResponseLocale(); ?><br />
+    Mime: <?php echo $this->routeConfig->getResponseMime(); ?><br />
+    MimeType: <?php echo $this->routeConfig->getResponseMimeType(); ?><br />
+</p>
+
+
+<hr />
+
+<p>
+    Segue abaixo um esquema da estrutura básica de diretórios que compõe uma <b>Aplicação EnGarde!</b>.
+    <br />
+    Os nomes dos diretórios e arquivos são razoavelmente autodescritivos e em caso de dúvidas, com a
+    sequencia deste mini-tutorial tudo ficará mais claro.
+</p>
+<pre>
+&lt;Raiz do Domínio&gt;
+    ├─ &lt;Aplicação 01&gt; [Diretório da aplicação]
+    │   ├── cache
+    │   ├── controllers
+    │   ├── locales
+    │   ├── resources
+    │   ├── views
+    │   ├── AppRoutes.php   [Gerado automaticamente pelo roteador]
+    │   └── AppStart.php    [Classe principal da aplicação]
+    │
+    ├─ &lt;Aplicação 02&gt; [Diretório de uma outra aplicação]
+    ├─ &lt;vendor&gt;       [Dependências]
+    │
+    ├─ .gitignore
+    ├─ .htaccess
+    ├─ composer.json
+    ├─ database-config.php
+    ├─ domain-config.php
+    ├─ domain-error.php
+    ├─ index.php
+    └─ LICENSE
+</pre>
+
+
+<hr />
+<a href="/documentation/domain_config">Configuração do Domínio [domain-config.php]</a>

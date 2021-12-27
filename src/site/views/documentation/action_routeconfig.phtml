@@ -1,0 +1,216 @@
+<h1><?php echo $this->viewData->viewTitle; ?></h1>
+<p>
+    Locale: <?php echo $this->routeConfig->getResponseLocale(); ?><br />
+    Mime: <?php echo $this->routeConfig->getResponseMime(); ?><br />
+    MimeType: <?php echo $this->routeConfig->getResponseMimeType(); ?><br />
+</p>
+
+
+<hr />
+
+
+<h2>$this->serverConfig->getRouteConfig()</h2>
+<p>
+    Este objeto trará todas as configurações da rota corrente.
+    <br />
+    Este mesmo objeto está disponível para ser acessado usando <b>$this->routeConfig</b>
+</p>
+<p>
+    Diferente de todos os demais objetos aqui descritos, este é o único que o desenvolvedor
+    tem algum acesso para alterar suas propriedades. Não todas. Apenas aquelas que fazem sentido
+    que estejam disponíveis no momento da execução da rota.
+</p>
+
+
+
+<pre>
+Interface   : AeonDigital\EnGarde\Interfaces\Config\iRoute
+Classe      : AeonDigital\EnGarde\Config\Route
+
+&#187; $this->routeConfig
+    │
+    │   Retorna o nome da aplicação que está sendo executada.
+    ├─  getApplication() : string
+    │
+    │
+    │   Retorna a namespace completa do controller que está respondendo a requisição.
+    ├─  getNamespace() : string
+    │
+    │
+    │   Retorna o nome do controller que possui a action que deve resolver a rota.
+    ├─  getController() : string
+    │
+    │
+    │   Retorna a namespace completa do controller que deve responder a esta
+    │   requisição.
+    ├─  getControllerNamespace() : string
+    │
+    │
+    │   Retorna o nome da action que resolve a rota.
+    ├─  getAction() : string
+    │
+    │
+    │   Retorna os métodos ``HTTP`` que podem ser usados para esta mesma rota.
+    ├─  getAllowedMethods() : array
+    │
+    │
+    │   Retorna um array associativo contendo a coleção de mimetypes que esta rota é capaz de
+    │   devolver como resposta.
+    ├─  getAllowedMimeTypes() : array
+    │
+    │
+    │   Retorna o método ``HTTP`` que está sendo usado para evocar esta rota.
+    ├─  getMethod() : string
+    │
+    │
+    │   Define a rota que está sendo resolvida e seus respectivos aliases.
+    │   As rotas devem sempre ser definidas de forma relativa à raiz (começando com "/").
+    ├─  getRoutes() : array
+    │
+    │
+    │   Retorna ``true`` caso aplicação deve priorizar o uso do mime ``xhtml`` sobre o ``html``.
+    ├─  getIsUseXHTML() : bool
+    │
+    │
+    │   Retorna o nome do método que deve ser executado na classe da Aplicação para resolver a rota.
+    │   Se não for definido deve retornar ``run`` como valor padrão.
+    ├─  getRunMethodName() : string
+    │
+    │
+    │   Resgata um array associativo contendo propriedades customizadas para o processamento
+    │   da rota.
+    ├─  getCustomProperties() : array
+    │
+    │
+    │   Retorna uma descrição sobre a ação executada por esta rota.
+    ├─  getDescription() : string
+    │
+    │
+    │   Retorna uma descrição técnica para a rota.
+    │   O formato MarkDown pode ser utilizado.
+    ├─  getDevDescription() : string
+    │
+    │
+    │   Retorna uma coleção de rotas e/ou URLs que tem relação com esta.
+    ├─  getRelationedRoutes() : array
+    │
+    │
+    │   Retorna a coleção de nomes de Middlewares que devem ser executados durante o
+    │   processamento da rota alvo.
+    ├─  getMiddlewares() : array
+    │
+    │
+    │   Retorna ``true`` se a rota deve ser protegida pelo sistema de segurança da aplicação.
+    ├─  getIsSecure() : bool
+    │
+    │
+    │   Retorna ``true`` se a rota possui um conteúdo cacheável.
+    ├─  getIsUseCache() : bool
+    │
+    │
+    │   Retorna o tempo (em minutos) pelo qual o documento em cache deve ser armazenado até
+    │   expirar.
+    ├─  getCacheTimeout() : int
+    │
+    │
+    │   Retorna o Locale a ser usado para resolver esta rota.
+    ├─  getResponseLocale() : string
+    │
+    │
+    │   Retorna o Mime (extenção) a ser usado para resolver esta rota.
+    ├─  getResponseMime() : string
+    │
+    │
+    │   Retorna o MimeType (canônico) a ser usado para resolver esta rota.
+    ├─  getResponseMimeType() : string
+    │
+    │
+    │   Quando ``true`` indica que o código de retorno deve passar por algum tratamento que
+    │   facilite a leitura do mesmo por humanos.
+    ├─  getResponseIsPrettyPrint() : bool
+    │
+    │
+    │   Retorna ``true`` se o resultado da execução da rota deve ser uma resposta em formato de
+    │   download.
+    ├─  getResponseIsDownload() : bool
+    │
+    │   Define se o resultado da execução da rota deve ser uma resposta em formato de download.
+    ├─  setResponseIsDownload(bool $responseIsDownload) : void
+    │
+    │
+    │   Retorna o nome do documento que deve ser devolvido ao efetuar o download da rota.
+    ├─  getResponseDownloadFileName() : string
+    │
+    │   Define o nome do documento que deve ser devolvido ao efetuar o download da rota.
+    ├─  setResponseDownloadFileName(string $responseDownloadFileName) : void
+    │
+    │
+    │   Retorna a coleção de headers a serem enviados na resposta para o ``UA``.
+    ├─  getResponseHeaders() : array
+    │
+    │   Define uma coleção de headers a serem enviados na resposta para o ``UA``.
+    ├─  setResponseHeaders(array $responseHeaders) : void
+    │
+    │
+    │   Retorna o caminho relativo (a partir de ``appRootPath``) até a master page que será
+    │   utilizada.
+    ├─  getMasterPage() : string
+    │
+    │   Define o caminho relativo (a partir de ``appRootPath``) até a master page que será
+    │   utilizada.
+    ├─  setMasterPage(string $masterPage) : void
+    │
+    │
+    │   Retorna o caminho relativo (a partir do diretório definido para as views) até a view
+    │   que será utilizada.
+    ├─  getView() : string
+    │
+    │   Define o caminho relativo (a partir do diretório definido para as views) até a view
+    │   que será utilizada.
+    ├─  setView(string $view) : void
+    │
+    │
+    │   Retorna uma coleção de caminhos até as folhas de estilos que devem ser incorporadas no
+    │   documento final (caso trate-se de um formato que aceita este tipo de recurso).
+    ├─  getStyleSheets() : array
+    │
+    │   Redefine toda coleção de caminhos até as folhas de estilos que devem ser incorporadas no
+    │   documento final (caso trate-se de um formato que aceita este tipo de recurso.)
+    ├─  setStyleSheets(array $styleSheets) : void
+    │
+    │   Adiciona novas folhas de estilo na coleção existente.
+    ├─  addStyleSheets(array $styleSheets) : void
+    │
+    │
+    │   Retorna uma coleção de caminhos até as scripts que devem ser incorporadas no documento
+    │   final (caso trate-se de um formato que aceita este tipo de recurso).
+    ├─  getJavaScripts() : array
+    │
+    │   Redefine toda coleção de caminhos até as scripts que devem ser incorporadas no documento
+    │   final (caso trate-se de um formato que aceita este tipo de recurso.)
+    ├─  setJavaScripts(array $javaScripts) : void
+    │
+    │   Adiciona novos scripts na coleção existente.
+    ├─  addJavaScripts(array $javaScripts) : void
+    │
+    │
+    │   Retorna a coleção de metadados a serem incorporados nas views ``X/HTML``.
+    ├─  getMetaData() : array
+    │
+    │   Redefinr a coleção de metadados a serem incorporados nas views ``X/HTML``.
+    ├─  setMetaData(array $metaData) : void
+    │
+    │   Adiciona novos itens na coleção existente.
+    ├─  addMetaData(array $metaData) : void
+    │
+    │
+    │   Retorna o caminho relativo (a partir de ``appRootPath``) até o arquivo de legendas do locale
+    │   que será usado para responder a requisição.
+    └─  getLocaleDictionary() : string
+
+
+
+
+</pre>
+<hr />
+<a href="/documentation/action_viewdata">Objeto ViewData</a>

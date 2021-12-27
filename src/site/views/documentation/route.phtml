@@ -1,0 +1,339 @@
+<h1><?php echo $this->viewData->viewTitle; ?></h1>
+<p>
+    Locale: <?php echo $this->routeConfig->getResponseLocale(); ?><br />
+    Mime: <?php echo $this->routeConfig->getResponseMime(); ?><br />
+    MimeType: <?php echo $this->routeConfig->getResponseMimeType(); ?><br />
+</p>
+
+
+<hr />
+
+<p>
+    Como toda aplicação Rest, o coração do funcionamento das aplicações reside nas rotas HTTP
+    que você irá configurar.
+    <br />
+    No <b>EnGarde!</b>, uma rota é configurada utilizando uma coleção de propriedades pré-definidas
+    que tem por função gerenciar desde seu acesso, a forma de composição de uma view (se necessário)
+    e também quais mimetypes que ela é capaz de responder.
+    <br />
+    Normalmente você apenas quer definir que uma página possa ser acessada por uma dada URL, mas há casos
+    mais complexos onde você deseja servir um mesmo conteúdo usando formatos diferentes como HTML, XML,
+    CSV, PDF e outros. Para isto você precisa ao menos ter o conhecimento básico do que é possível fazer
+    com os parametros de configuração disponíveis.
+</p>
+<p>
+    Para começar é preciso ter em mente que TODA ROTA PRECISA ser descrita usando uma propriedade <b>public static</b>
+    cujo nome DEVE iniciar por <b>registerRoute_</b>. É desta forma que o motor do domínio consegue catalogar
+    todas as rotas disponíveis e pré processa-las.
+</p>
+<p>
+    Abaixo segue um exemplo de uma rota contendo todos os itens de configuração disponíveis e uma breve
+    descrição de seu funcionamento.<br />
+    Obs: Todos aqueles que são preenchidos automaticamente não devem ser redefinidos.
+</p>
+
+<pre>
+&lt;?php
+declare (strict_types=1);
+
+namespace site\controllers;
+
+use AeonDigital\EnGarde\MainController as MainController;
+
+
+
+/**
+ * Controller
+ */
+class Home extends MainController
+{
+    public static $registerRoute_index = [
+        // Nome da action que resolve a rota.
+        // OBRIGATORIO
+        // DEFINIDO NA ROTA
+        //
+        // @string
+        "action"                    => "index",
+
+
+        // Métodos ``HTTP`` que podem ser usados para esta mesma rota.
+        // OBRIGATORIO
+        // DEFINIDO NA ROTA
+        //
+        // Se for omitido será considerado apenas válido o acesso usando GET.
+        //
+        // @string[]
+        "allowedMethods"            => [],
+
+
+        // Array associativo contendo a coleção de mimetypes que esta rota é capaz de
+        // devolver como resposta.
+        // OBRIGATORIO
+        // DEFINIDO NA ROTA
+        //
+        // Pode ser um array de mimes como:
+        // [ "txt", "xhtml" ]
+        // ou, pode ser um array associativo como:
+        // [ "txt" => "text/plain", "xhtml" => "application/xhtml+xml" ]
+        //
+        // É uma boa prática definir um valor padrão como ["html"] nas configurações da
+        // própria aplicação para evitar ter que definir este valor em cada rota ou controller.
+        //
+        // @array
+        "allowedMimeTypes"          => ["html", "xhtml", "pdf"],
+
+
+        // Rota que está sendo resolvida e seus respectivos aliases.
+        // OBRIGATORIO
+        // DEFINIDO NA ROTA
+        //
+        // @string[]
+        "routes"                    => ["/", "/index", "/home", "/start"],
+
+
+        // Indica se a aplicação deve priorizar o uso do mime ``xhtml`` sobre o ``html``.
+        // OBRIGATORIO
+        // DEFINIDO NA ROTA
+        //
+        // @bool
+        "isUseXHTML"                => false,
+
+
+        // Nome do método que deve ser executado na classe da Aplicação para resolver a rota.
+        // OPCIONAL
+        // DEFINIDO NA ROTA
+        //
+        // Na classe AeonDigital\EnGarde\MainApplication existe o método "run" que é
+        // disparado sempre que a aplicação é iniciada. Se você precisar de um outro método
+        // para resolver as rotas de sua aplicação, ou apenas algumas em especial, use esta
+        // propriedade para utilizá-la.
+        //
+        // @bool
+        "runMethodName"             => "run",
+
+
+        // Coleção de propriedades customizadas da rota.
+        // OPCIONAL
+        // DEFINIDO NA ROTA
+        //
+        // Quando você precisar de configurações adicionais para a configuração das rotas de suas
+        // aplicações, use esta propriedade para defini-las.
+        //
+        // @array
+        "customProperties"          => [],
+
+
+        // Descrição sobre a ação executada por esta rota.
+        // OPCIONAL
+        // DEFINIDO NA ROTA
+        //
+        // Este tipo de configuração possui maior importancia se você deseja criar uma API.
+        // Tal descrição pode ser exposta de forma pública.
+        //
+        // @string
+        "description"               => "",
+
+
+        // Descrição técnica para a rota.
+        // OPCIONAL
+        // DEFINIDO NA ROTA
+        //
+        // Use esta propriedade para prover para os demais desenvolvedores informações em nível de
+        // desenvolvedor para os mesmos.
+        // Considere usar inclusive dados em MarkDown.
+        //
+        // @string
+        "devDescription"            => "",
+
+
+        // Coleção de rotas e/ou URLs que tem relação com esta.
+        // OPCIONAL
+        // DEFINIDO NA ROTA
+        //
+        // @string[]
+        "relationedRoutes"          => [],
+
+
+        // Coleção de nomes de Middlewares que devem ser executados durante o
+        // processamento da rota alvo.
+        // OPCIONAL
+        // DEFINIDO NA ROTA
+        //
+        // Cada item do array deverá se referir a um método existente na classe da aplicação que
+        // retorna uma instância do Middleware alvo.
+        //
+        // @string[]
+        "middlewares"               => [],
+
+
+        // Indica se a rota deve ser protegida pelo sistema de segurança da aplicação.
+        // OPCIONAL
+        // DEFINIDO NA ROTA
+        //
+        // @bool
+        "isSecure"                  => false,
+
+
+        // Indica se a rota possui um conteúdo cacheável.
+        // OPCIONAL
+        // DEFINIDO NA ROTA
+        //
+        // @bool
+        "isUseCache"                => false,
+
+
+        // Tempo (em minutos) pelo qual o documento em cache deve ser armazenado até
+        // expirar.
+        // OPCIONAL
+        // DEFINIDO NA ROTA
+        //
+        // @int
+        "cacheTimeout"              => 0,
+
+
+        // Indica se o resultado da execução da rota deve ser um download.
+        // Pode ser redefinido durante a execução da Action.
+        // OPCIONAL
+        // PODE SER REDEFINIDO NA ROTA OU NA ACTION
+        //
+        // @bool
+        "responseIsDownload"        => false,
+
+
+        // Nome do documento enviado por download.
+        // OPCIONAL
+        // PODE SER REDEFINIDO NA ROTA OU NA ACTION
+        //
+        // @string
+        "responseDownloadFileName"  => "",
+
+
+        // Coleção de headers a serem enviados para o ``UA``.
+        // As chaves de valores informadas devem ser tratadas em ``case-insensitive``.
+        // OPCIONAL
+        // PODE SER REDEFINIDO NA ROTA OU NA ACTION
+        //
+        // @array
+        "responseHeaders"           => [],
+
+
+        // Caminho relativo (a partir de ``appRootPath``) até a master page que será utilizada.
+        // OPCIONAL
+        // PODE SER REDEFINIDO NA ROTA OU NA ACTION
+        //
+        // @string
+        "masterPage"                => "",
+
+
+        // Caminho relativo (a partir do diretório definido para as views) até a view que será
+        // utilizada.
+        // OPCIONAL
+        // PODE SER REDEFINIDO NA ROTA OU NA ACTION
+        //
+        // @string
+        "view"                      => "",
+
+
+        // Coleção de folhas de estilo que devem ser vinculados na view.
+        // OPCIONAL
+        // PODE SER REDEFINIDO NA ROTA OU NA ACTION
+        //
+        // @array
+        "styleSheets"               => [
+            "/css/main.css", "/css/index.css"
+        ],
+
+
+        // Coleção de scripts que devem ser vinculados na view.
+        // OPCIONAL
+        // PODE SER REDEFINIDO NA ROTA OU NA ACTION
+        //
+        // @array
+        "javaScripts"               => [
+            "/js/main.js"
+        ],
+
+
+        // Coleção de metadados a serem incorporados na view X/HTML.
+        // OPCIONAL
+        // PODE SER REDEFINIDO NA ROTA OU NA ACTION
+        //
+        // @array
+        "metaData"                  => [
+            "Author"    => "Rianna Cantarelli"
+        ],
+
+
+        // Caminho relativo (a partir de ``appRootPath``) até o arquivo de legendas do locale
+        // que será usado para responder a requisição.
+        // OPCIONAL
+        // PODE SER REDEFINIDO NA ROTA OU NA ACTION
+        //
+        // @string
+        "localeDictionary"          => ""
+    ];
+    public function index() {
+        // Regras de negócio aqui!
+    }
+}
+</pre>
+
+
+
+<hr />
+
+<h2>Definição simples</h2>
+<p>
+    Há uma forma simples (e mais limitada) de descrever uma rota em formato de <i>string</i> ao invés de um
+    array associativo.
+</p>
+
+<pre>
+Para isto você precisa seguir as seguintes regras:
+
+[method] route action [secure|public|- [cache|no-cache [timeout]]]
+
+**method**  equivale a propriedade ``allowedMethods``.
+apenas pode ser omitido se for definido apenas os itens **route** e **action**.
+Em caso de omissão será retornado o valor ``["GET"]``.
+
+**secure|public|-** equivale a propriedade ``isSecure``.
+    Para definir como ``true``, use **secure**.
+    Para definir como ``false``, use **public**.
+    Para herdar das definições hierarquicamente superiores use **-**.
+
+**cache|no-cache** permite definir os valores de ``isUseCache``
+    Para definir como ``true``, use **cache**
+    Para definir como ``false``, use **no-cache**
+
+**timeout** permite definir ``cacheTimeout``.
+    Deve ser um valor inteiro maior que zero.
+    É obrigatório quando a definição de cache existe.
+
+----------  ----------  ----------  ----------  ----------  ----------  ----------
+
+/**
+ * Rota de exemplo usando uma string para registrá-la.
+ *
+ * @var         string
+ */
+public static $registerRoute_route = "/ home";
+
+/**
+ * Outra rota simples, mas usando o método POST
+ *
+ * @var         string
+* /
+public static $registerRoute_contact = "POST /contact contact";
+
+/**
+ * Outra rota simples, usando todas as opções.
+ *
+ * @var         string
+* /
+public static $registerRoute_list = "GET /list list public cache-14400";
+</pre>
+
+
+<hr />
+<a href="/documentation/action">Trabalhando com uma rota</a>

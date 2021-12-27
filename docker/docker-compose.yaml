@@ -11,7 +11,7 @@ volumes:
 services:
 
   # 
-  # Servidor Apache com PHP 7.4
+  # Servidor Web Apache com PHP 7.4
   server-apache-php:
     image: aeondigital/engarde-apache-php-7.4:0.9.19a5e31
     ports:
@@ -23,7 +23,7 @@ services:
 
 
   #
-  # Servidor de banco de dados MySQL 8.0
+  # Servidor de Banco de Dados MySQL 8.0
   server-db-mysql:
     container_name: server-db-mysql
     image: mysql:8.0.27
