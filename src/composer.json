@@ -1,8 +1,6 @@
 {
 	"name": "aeondigital/phpengardestart",
 	"description": "Projeto inicial usando o Micro Framework EnGarde!",
-	"version": "v0.5.7-beta",
-	"time": "2020-08-13",
 	"type": "project",
 	"authors": [
 		{
@@ -15,7 +13,7 @@
 	"minimum-stability": "dev",
 	"require": {
 		"php": ">=7.4",
-		"aeondigital/phpengarde": ">=v0.5.7-beta"
+		"aeondigital/phpengarde": ">=v0.6.2-beta"
 	},
 	"autoload": {
 		"psr-4": {

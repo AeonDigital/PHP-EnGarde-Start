@@ -1,0 +1,56 @@
+version: "3"
+
+
+
+#
+# Volumes gerenciados pelo Docker para uso
+# nos demais serviços.
+volumes:
+  server-db-mysql-data:
+
+
+
+#
+# Descrição dos serviços
+services:
+
+
+  #
+  # Servidor Web
+  web-server:
+    image: aeondigital/apache-php-7.4:dev
+    container_name: dev-php-webserver
+    env_file:
+      - ./container-config/apache-php-7.4/etc/.env
+    volumes:
+      #
+      # Diretórios de arquivos de configuração.
+      # Apache
+      - ./container-config/apache-php-7.4/etc/apache2/sites-available:/etc/apache2/sites-available
+      - ./container-config/apache-php-7.4/etc/apache2/apache2.conf:/etc/apache2/apache2.conf
+      - ./container-config/apache-php-7.4/etc/apache2/envvars:/etc/apache2/envvars
+      # PHP
+      - ./container-config/apache-php-7.4/etc/php/7.4/apache2/php.ini:/etc/php/7.4/apache2/php.ini
+      - ./container-config/apache-php-7.4/etc/php/7.4/cli/php.ini:/etc/php/7.4/cli/php.ini
+      # Variáveis de ambiente
+      - ./container-config/apache-php-7.4/etc/.env:/etc/.env
+      # Arquivos de dump e backup do banco de dados
+      - ./container-config/apache-php-7.4/etc/database:/etc/database
+      #
+      # Aplicação web
+      - ./src:/var/www/html
+    ports:
+      - 8080:80
+
+  #
+  # Servidor de banco de dados
+  db-server:
+    image: aeondigital/mysql-8.0:dev
+    container_name: dev-php-dbserver
+    volumes:
+      #
+      # Diretórios de arquivos de configuração.
+      # MySql
+      - ./container-config/mysql-8.0/etc/mysql:/etc/mysql
+    volumes:
+      - server-db-mysql-data:/var/lib/mysql
