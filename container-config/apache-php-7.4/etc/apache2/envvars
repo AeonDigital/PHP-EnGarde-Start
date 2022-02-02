@@ -6,7 +6,7 @@
 # Comentários e as configurações para permitir rodar inúmeras
 # instâncias foram removidas.
 # Uma versão original do mesmo foi mantida no repositório deste
-# projeto 
+# projeto
 
 unset HOME
 
@@ -16,7 +16,8 @@ export LANG
 export APACHE_PID_FILE=/var/run/apache2/apache2.pid
 export APACHE_RUN_DIR=/var/run/apache2
 export APACHE_LOCK_DIR=/var/lock/apache2
-export APACHE_LOG_DIR=/var/log/apache2
+export APACHE_LOG_FILE_ERR=/dev/stderr
+export APACHE_LOG_FILE_ACCESS=/dev/stdout
 
 
 
