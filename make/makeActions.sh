@@ -38,7 +38,7 @@ makeExecuteBefore() {
 
 
 #
-# Ação executada imediatamente ANTES cada comando 'make'.
+# Ação executada imediatamente APÓS cada comando 'make'.
 #
 # @param string $1
 #       Recebe o nome do comando que está sendo executado.
